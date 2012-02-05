@@ -1,0 +1,20 @@
+<% if notice %>
+  <div class="notice">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="alert">
+    <%= alert %>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <% if current_user.has_role?(:write_posts) %>
+    <%= link_to_unless_current(t('new'), new_post_path) %>
+  <% end %>
+  <%= link_to(t('sign_out'), destroy_user_session_path, :method => :delete) %>
+<% else %>
+  <%= link_to(t('sign_in'), new_user_session_path) %>
+<% end %>

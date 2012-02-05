@@ -1,0 +1,28 @@
+<div id="recent-posts">
+  <ul>
+    <% posts.each do |p| %>
+      <li>
+        <% if p == post %>
+          <%= post.published_at.strftime("%B %d, %Y %H:%M %p") %>
+          <div id="post">
+            <% if user_signed_in? %>
+              <div class="actions">
+                <% if post.owned_by?(current_user) || current_user.has_role?(:delete_posts) %>
+                  [ <%= link_to(t('delete'), post_path(post), :method => :delete) %> ]
+                <% end %>
+              </div>
+            <% end %>
+            <div class="title">
+              <%= post.title %>
+            </div>
+            <div class="body">
+              <%= post.html.html_safe %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to(p.published_at.strftime("%B %d, %Y %H:%M %p"), post_path(p)) %> - [ <%= link_to(t('delete'), post_path(post), :method => :delete) %> ]
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

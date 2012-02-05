@@ -2,4 +2,26 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  new: 'write new post'
+  sign_in: 'sign in'
+  sign_out: 'sign out'
+  cancel: 'cancel'
+  posts:
+    not_found: 'Not Found'
+    create:
+      success:  'Success'
+      failure:  'Failure'
+    new:
+      title: Title
+      body: Body
+      privacy: Privacy
+      submit: 'Create Post'
+  doc:
+    post:
+      public:
+        term: public
+        meaning: 'The post will be visible to the entire internet. Anyone will be able to see this post.'
+      private:
+        term: private
+        meaning: 'The post will be visible only to logged-in users. Only users who have created and confirmed an account will be able to see this post.'
+      publish_at: 'The post will be visible after this time.'
