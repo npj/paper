@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => :index
+  before_filter :authenticate_user!, :except => [ :index, :show ]
   
   before_filter :find_posts, :only   => [ :index, :show ]
   before_filter :find_post,  :except => [ :index, :new, :create ]

@@ -16,6 +16,8 @@ en:
       body: Body
       privacy: Privacy
       submit: 'Create Post'
+    delete:
+      confirm: 'Are you sure you want to delete this post?'
   doc:
     post:
       public:
