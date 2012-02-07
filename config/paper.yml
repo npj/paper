@@ -1,5 +1,7 @@
 development:
   host: paper.local
+  time_zone: 'Rome'
 
 production:
   host: <%= ENV['PAPER_HOST'] %>
+  time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
