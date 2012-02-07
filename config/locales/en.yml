@@ -6,8 +6,11 @@ en:
   sign_in: 'sign in'
   sign_out: 'sign out'
   cancel: 'cancel'
+  back: 'back'
+  delete: 'delete'
   posts:
     not_found: 'Not Found'
+    not_published: 'Not Published'
     create:
       success:  'Success'
       failure:  'Failure'

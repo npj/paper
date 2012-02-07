@@ -29,11 +29,19 @@ class Post
   end
   
   def owned_by?(user)
-    self.user == user
+    user && self.user == user
+  end
+  
+  def can_delete?(user)
+    user && (owned_by?(user) || user.has_role?(:delete_posts))
   end
   
   def published?
     self.published_at <= Time.now
+  end
+  
+  def excerpt
+    RDiscount.new(self.markdown.split(/\n/).first).to_html
   end
   
   def privacy
