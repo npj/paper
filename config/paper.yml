@@ -1,0 +1,5 @@
+development:
+  host: paper.local
+
+production:
+  host: <%= ENV['PAPER_HOST'] %>
