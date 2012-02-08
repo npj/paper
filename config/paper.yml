@@ -1,5 +1,5 @@
 development:
-  host: paper.local
+  host: 0.0.0.0:3000
   time_zone: 'Rome'
 
 production:
