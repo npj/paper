@@ -25,8 +25,5 @@ module Paper
   end
 end
 
-Paper::Application.configure do
-  config.action_mailer.default_url_options = { :host => Paper.config.host }
-end
-
+ActionMailer::Base.default_url_options = { :host => Paper.config.host }
 Time.zone = Paper.config.time_zone
