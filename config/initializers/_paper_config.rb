@@ -18,8 +18,21 @@ module Paper
       end
     
       def initialize
-        read(path)[Rails.env].each do |key, value|
-          class_eval { define_method(key) { value } }
+        define_accessors(self, read(path)[Rails.env])
+      end
+      
+    private
+        
+      def define_accessors(object, hash)
+        hash.each do |key, value|
+          if value.is_a?(Hash)
+            Object.new.tap do |child|
+              define_accessors(child, value)
+              object.class_eval { define_method(key) { child } }
+            end
+          else
+            object.class_eval { define_method(key) { value } }
+          end
         end
       end
   end

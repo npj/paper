@@ -1,7 +1,15 @@
 development:
-  host: 0.0.0.0:3000
-  time_zone: 'Rome'
+  host: <%= ENV['PAPER_HOST'] %>
+  time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
+  owner:
+    username: <%= ENV['PAPER_OWNER_USERNAME'] %>
+    email: <%= ENV['PAPER_OWNER_EMAIL'] %>
+    password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
 
 production:
   host: <%= ENV['PAPER_HOST'] %>
   time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
+  owner:
+    username: <%= ENV['PAPER_OWNER_USERNAME'] %>
+    email: <%= ENV['PAPER_OWNER_EMAIL'] %>
+    password: <%= ENV['PAPER_OWNER_PASSWORD'] %>

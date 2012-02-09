@@ -12,7 +12,7 @@
 
 <% if user_signed_in? %>
   <div class="user">
-    Signed in as <span class="username"><%= current_user.name %></span>
+    Signed in as <span class="username"><%= current_user.username %></span>
   </div>
   <% if current_user.has_role?(:write_posts) %>
     <%= link_to_unless_current(t('new'), new_post_path) %>
