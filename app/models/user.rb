@@ -3,7 +3,7 @@ class User
   
   include Paper::Roles::User
   
-  field :username
+  field :name
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -54,7 +54,7 @@ class User
     
     user = self.find_by_email(Paper.config.owner.email) || self.new
     
-    user.username              = Paper.config.owner.username
+    user.name                  = Paper.config.owner.name
     user.email                 = Paper.config.owner.email
     user.password              = Paper.config.owner.password
     user.password_confirmation = Paper.config.owner.password
