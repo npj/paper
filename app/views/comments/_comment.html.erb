@@ -1,0 +1,6 @@
+<div class="body">
+  <%= comment.html.html_safe %>
+</div>
+<% unless comment.comments.empty? %>
+  <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
+<% end %>

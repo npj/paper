@@ -12,3 +12,4 @@
     <%= @post.html.html_safe %>
   </div>
 </div>
+<%= render(:partial => "comments/comments", :locals => { :parent => @post }) %>
