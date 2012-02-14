@@ -3,6 +3,8 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
     
+  include Paper::Markdown
+    
   PRIVACY = {
     :public  => 0,   # DEAFULT - visible by the world; anonymous and logged in users alike
     :private => 1,   # visible only to logged in users
@@ -10,10 +12,9 @@ class Post
   }  
     
   belongs_to :user
+  has_many :comments, :dependent => :destroy
   
   field :title,        :type => String
-  field :html,         :type => String
-  field :markdown,     :type => String
   field :privacy,      :type => Integer, :default => PRIVACY[:public]
   field :published_at, :type => DateTime
   
@@ -50,12 +51,6 @@ class Post
   
   protected
   
-    # before_save
-    # convert markdown body to html
-    def markdownify
-      self.html = RDiscount.new(self.markdown || "").to_html
-    end
-    
     # before_save
     # publish now if not specified
     def publish
