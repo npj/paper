@@ -6,6 +6,14 @@ development:
     email: <%= ENV['PAPER_OWNER_EMAIL'] %>
     password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
 
+test:
+  host: <%= ENV['PAPER_HOST'] %>
+  time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
+  owner:
+    name: <%= ENV['PAPER_OWNER_NAME'] %>
+    email: <%= ENV['PAPER_OWNER_EMAIL'] %>
+    password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
+
 production:
   host: <%= ENV['PAPER_HOST'] %>
   time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
