@@ -13,5 +13,11 @@ gem 'jquery-rails'
 gem "devise"
 gem "bson_ext"
 gem "mongoid"
-gem "rspec-rails", :group => [ :development, :test ]
+
+group :development, :test do
+  gem "rspec-rails"
+  gem "fabrication"
+  gem "faker"
+end
+
 gem 'rdiscount'
