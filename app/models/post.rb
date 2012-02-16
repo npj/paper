@@ -4,28 +4,22 @@ class Post
   include Mongoid::MultiParameterAttributes
     
   include Paper::Markdown
-    
-  PRIVACY = {
-    :public  => 0,   # DEAFULT - visible by the world; anonymous and logged in users alike
-    :private => 1,   # visible only to logged in users
-    # :custom  => 2  # visible to an author-speicified list of registered users
-  }  
-    
+  include Paper::Privacy
+      
   belongs_to :user
   has_many :comments, :dependent => :destroy
   
   field :title,        :type => String
-  field :privacy,      :type => Integer, :default => PRIVACY[:public]
   field :published_at, :type => DateTime
   
   before_save :publish
-  before_save :markdownify
+  after_save  :pass_down_privacy
   
   def self.for_user(user)
     if user
       self.any_of({ :published_at => { '$lte' => Time.now } }, { :user_id => user.id })
     else
-      self.where(:published_at => { '$lte' => Time.now }, :privacy => PRIVACY[:public])
+      self.where(:published_at => { '$lte' => Time.now }, :privacy => Paper::PRIVACY[:public])
     end
   end
   
@@ -45,15 +39,19 @@ class Post
     RDiscount.new(self.markdown.split(/\n/).first).to_html
   end
   
-  def privacy
-    PRIVACY.find { |sym, val| val == self[:privacy] }.try(:first)
-  end
-  
   protected
   
     # before_save
     # publish now if not specified
     def publish
       self.published_at ||= (self.created_at || Time.now)
+    end
+    
+    # after_save
+    # if our privacy has changed to private, set comments to private
+    def pass_down_privacy
+      if self.changes.has_key?('privacy') && self.private?
+        self.comments.each { |comment| comment.private! unless comment.private? }
+      end
     end
 end
