@@ -16,7 +16,9 @@ module Paper
         end
         
         def set_privacy!(p)
-          self.update_attribute(:privacy, PRIVACY[p])
+          unless has_privacy?(p)
+            self.update_attribute(:privacy, PRIVACY[p])
+          end
         end
         
         PRIVACY.each_key do |label|

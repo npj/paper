@@ -14,7 +14,6 @@ class Comment
   
   before_save  :inherit_privacy
   after_save   :pass_down_privacy
-  after_create :add_user_to_parent_visible
   
   belongs_to :user
   belongs_to :post
@@ -80,10 +79,16 @@ class Comment
       end
     end
     
-     # set privacy to private if parent or post is private
+    # a comment is always visible to the owners of child comments
+    # set privacy to private if parent or post is private
     def inherit_privacy
-      if self.parent.try(:private?) || self.post.try?(:private?)
-        self.private! unless self.private?
+      if parent
+        parent.visible_to |= [ self.user_id ]
+        parent.save
+      end
+      
+      if self.parent.try(:private?) || self.post.try(:private?)
+        self.private!
       end
     end
     
@@ -91,17 +96,7 @@ class Comment
     # if our privacy has changed to private, set children to private
     def pass_down_privacy
       if self.changes.has_key?('privacy') && self.private?
-        self.comments.each { |child| child.private! unless child.private? }
-      end
-    end
-    
-    # after_create
-    # a comment is always visible to the owners of child comments
-    def add_user_to_parent_visible(p = self.parent)
-      if p
-        p.visible_to |= [ self.user.id ]
-        p.save
-        add_user_to_parent_visible(p.parent)
+        self.comments.each { |c| c.private! }
       end
     end
 end

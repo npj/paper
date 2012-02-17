@@ -51,7 +51,7 @@ class Post
     # if our privacy has changed to private, set comments to private
     def pass_down_privacy
       if self.changes.has_key?('privacy') && self.private?
-        self.comments.each { |comment| comment.private! unless comment.private? }
+        self.comments.each { |comment| comment.private! }
       end
     end
 end
