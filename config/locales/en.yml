@@ -8,6 +8,8 @@ en:
   cancel: 'cancel'
   back: 'back'
   delete: 'delete'
+  reply: 'reply'
+  replied: 'replied'
   posts:
     not_found: 'Not Found'
     not_published: 'Not Published'

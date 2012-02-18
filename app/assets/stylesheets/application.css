@@ -11,3 +11,48 @@
  *= require_self
  *= require_tree .
 */
+
+textarea {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.comments .comments {
+  margin-left: 10px;
+}
+
+.comment {
+  margin-top: 15px;
+}
+
+.comment a.comment-collapse {
+ display: block;
+ float: left;
+ margin-right: 5px;
+ width: 11px;
+ height: 11px;
+ text-decoration: none;
+ border: 1px solid #ccc;
+ text-align: center;
+ line-height: 10px;
+ color: #aaa;
+}
+
+.comment .comment-user {
+  line-height: 12px;
+}
+
+.comment div.collapsable {
+  padding-left: 10px;
+  margin-left: 5px;
+  border-left: 1px solid #ccc;
+}
+
+a.reply-link {
+  display: block;
+  margin-bottom: 5px;
+}
+

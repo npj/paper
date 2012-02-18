@@ -1,5 +1,6 @@
 Paper::Application.routes.draw do
   resources :posts
+  resources :comments
 
   devise_for :users
   

@@ -16,7 +16,7 @@
           <%= link_to(published_at(p), post_path(p)) %>
         </div>
         <div class="comments-count">
-          <%= link_to(pluralize(p.comments.visible_to(current_user).count, t("posts.comments_count")), post_path(p)) %>
+          <%= link_to(pluralize(p.all_comments.visible_to(current_user).count, t("posts.comments_count")), post_path(p)) %>
         </div>
         <div class="excerpt">
           <%= p.excerpt.html_safe %>

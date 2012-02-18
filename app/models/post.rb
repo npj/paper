@@ -7,7 +7,7 @@ class Post
   include Paper::Privacy
       
   belongs_to :user
-  has_many :comments, :dependent => :destroy
+  has_many :all_comments, :class_name => 'Comment', :dependent => :destroy
   
   field :title,        :type => String
   field :published_at, :type => DateTime
@@ -21,6 +21,10 @@ class Post
     else
       self.where(:published_at => { '$lte' => Time.now }, :privacy => Paper::PRIVACY[:public])
     end
+  end
+  
+  def comments
+    self.all_comments.where(:parent_id => nil)
   end
   
   def owned_by?(user)

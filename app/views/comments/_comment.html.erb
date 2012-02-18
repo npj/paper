@@ -1,6 +1,15 @@
-<div class="body">
-  <%= comment.html.html_safe %>
+<div class="comment" data-id="<%= comment.id %>" data-parent-id="<%= comment.parent.try(:id) %>">
+  <%= link_to("-", comments_path, :class => "comment-collapse", 'data-collapsed' => false) %>
+  <div class="comment-user">
+    <%= comment.user.name %> <%= t('replied') %>:
+  </div>
+  <div class="collapsable">
+    <div class="comment-body">
+      <%= comment.html.html_safe %>
+    </div>
+    <%= render(:partial => "comments/reply", :locals => { :parent => comment }) %>
+    <% unless comment.comments.empty? %>
+      <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
+    <% end %>
+  </div>
 </div>
-<% unless comment.comments.empty? %>
-  <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
-<% end %>
