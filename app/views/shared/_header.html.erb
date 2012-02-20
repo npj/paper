@@ -15,9 +15,9 @@
     Signed in as <span class="name"><%= current_user.name %></span>
   </div>
   <% if current_user.has_role?(:write_posts) %>
-    <%= link_to_unless_current(t('new'), new_post_path) %>
+    [ <%= link_to_unless_current(t('new'), new_post_path) %> ]
   <% end %>
-  <%= link_to(t('sign_out'), destroy_user_session_path, :method => :delete) %>
+  [ <%= link_to(t('sign_out'), destroy_user_session_path, :method => :delete) %> ]
 <% else %>
-  <%= link_to(t('sign_in'), new_user_session_path) %>
+  [ <%= link_to(t('sign_in'), new_user_session_path) %> ]
 <% end %>

@@ -1,12 +1,15 @@
-<div>
+<div class="back-link">
   <%= link_to(t("back"), posts_path) %>
 </div>
 <div class="post">
-  <div class="datetime">
-    <%= published_at(@post) %>
-  </div>
   <div class="title">
     <%= @post.title %>
+  </div>
+  <div class="username">
+    <span class="name"><%= @post.user.name %></span>
+  </div>
+  <div class="datetime">
+    <%= published_at(@post) %>
   </div>
   <div class="body">
     <%= @post.html.html_safe %>

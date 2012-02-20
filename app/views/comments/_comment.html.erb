@@ -1,7 +1,10 @@
 <div class="comment" data-id="<%= comment.id %>" data-parent-id="<%= comment.parent.try(:id) %>">
   <%= link_to("-", comments_path, :class => "comment-collapse", 'data-collapsed' => false) %>
   <div class="comment-user">
-    <%= comment.user.name %> <%= t('replied') %>:
+    <span class="name"><%= comment.user.name %></span>
+  </div>
+  <div class="comment-date">
+    <%= comment_date(comment) %>
   </div>
   <div class="collapsable">
     <div class="comment-body">

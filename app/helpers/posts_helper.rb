@@ -1,6 +1,6 @@
 module PostsHelper
   def published_at(post)
-    post.published_at.in_time_zone.strftime("%B %d, %Y %H:%M %p %Z")
+    post.published_at.in_time_zone.strftime("%A %B %d, %Y &mdash; %H:%M %p %Z").html_safe
   end
   
   def delete_link(post)
