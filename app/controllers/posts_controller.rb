@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   protected
   
     def find_posts
-      @posts = Post.for_user(current_user)
+      @posts = Post.for_user(current_user).order_by([ :published_at, :desc ])
     end
   
     def find_post

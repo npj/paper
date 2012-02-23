@@ -1,26 +1,27 @@
-<% if user_signed_in? %>
-  
-  <% css = "reply-form" %>
-  <% if parent.is_a?(Comment) %>
-    <% css << " hidden" %>
-  <% end %>
-  
-  <% if parent.is_a?(Comment) %>
+<% css = "reply-form" %>
+<% if parent.is_a?(Comment) %>
+  <% css << " hidden" %>
+<% end %>
+
+<% if parent.is_a?(Comment) %>
+  <% if user_signed_in? %>
     <%= link_to(t("reply"), new_comment_path, :class => "reply-link", :id => "reply_link_#{parent.id}", 'data-form-id' => "reply_form_#{parent.id}") %>
+  <% else %>
+    <%= link_to(t("sign_in_to_reply"), new_user_session_path) %>
   <% end %>
-  
-  <%= form_for Comment.new, :html => { :class => css, :id => "reply_form_#{parent.id}" } do |form| %>
-    <% if parent.is_a?(Post) %>
-      <%= form.hidden_field :post_id, :value => parent.id %>
-    <% else %>
-      <%= form.hidden_field :parent_id, :value => parent.id %>
+<% end %>
+
+<%= form_for Comment.new, :html => { :class => css, :id => "reply_form_#{parent.id}" } do |form| %>
+  <% if parent.is_a?(Post) %>
+    <%= form.hidden_field :post_id, :value => parent.id %>
+  <% else %>
+    <%= form.hidden_field :parent_id, :value => parent.id %>
+  <% end %>
+  <%= form.text_area(:markdown, :rows => 8, :cols => 70) %>
+  <div class="actions">
+    <% if parent.is_a?(Comment) %>
+      <%= link_to(t('cancel'), new_comment_path, :class => "cancel", 'data-form-id' => "reply_form_#{parent.id}", 'data-link-id' => "reply_link_#{parent.id}") %>
     <% end %>
-    <%= form.text_area(:markdown, :rows => 8, :cols => 70) %>
-    <div class="actions">
-      <% if parent.is_a?(Comment) %>
-        <%= link_to(t('cancel'), new_comment_path, :class => "cancel", 'data-form-id' => "reply_form_#{parent.id}", 'data-link-id' => "reply_link_#{parent.id}") %>
-      <% end %>
-      <%= form.submit(:save) %>
-    </div>
-  <% end %>
+    <%= form.submit(:save) %>
+  </div>
 <% end %>

@@ -6,11 +6,13 @@ en:
   sign_in: 'sign in'
   sign_out: 'sign out'
   cancel: 'cancel'
-  back: 'back'
   delete: 'delete'
   reply: 'reply'
   replied: 'replied'
+  all_posts: 'All posts'
+  sign_in_to_reply: 'sign in to reply'
   posts:
+    name: 'posts'
     not_found: 'Not Found'
     not_published: 'Not Published'
     comments_count: "comment"

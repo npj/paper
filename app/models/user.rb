@@ -8,9 +8,7 @@ class User
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, 
-         :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   ## Database authenticatable
   field :email,              :type => String, :null => false, :default => ""
@@ -34,10 +32,10 @@ class User
   # field :password_salt, :type => String
 
   ## Confirmable
-  field :confirmation_token,   :type => String
-  field :confirmed_at,         :type => Time
-  field :confirmation_sent_at, :type => Time
-  field :unconfirmed_email,    :type => String
+  # field :confirmation_token,   :type => String
+  # field :confirmed_at,         :type => Time
+  # field :confirmation_sent_at, :type => Time
+  # field :unconfirmed_email,    :type => String
 
   ## Lockable
   # field :failed_attempts, :type => Integer, :default => 0 # Only if lock strategy is :failed_attempts

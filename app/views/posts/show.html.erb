@@ -1,9 +1,6 @@
-<div class="back-link">
-  <%= link_to(t("back"), posts_path) %>
-</div>
 <div class="post">
   <div class="title">
-    <%= @post.title %>
+    <%= link_to(t('all_posts'), posts_path) %> > <%= @post.title %>
   </div>
   <div class="username">
     <span class="name"><%= @post.user.name %></span>
@@ -15,5 +12,9 @@
     <%= @post.html.html_safe %>
   </div>
 </div>
-<%= render(:partial => "comments/reply", :locals => { :parent => @post }) %>
+<% if user_signed_in? %>
+  <%= render(:partial => "comments/reply", :locals => { :parent => @post }) %>
+<% else %>
+  <%= link_to(t('sign_in_to_reply'), new_user_session_path) %>
+<% end %>
 <%= render(:partial => "comments/comments", :locals => { :parent => @post }) %>
