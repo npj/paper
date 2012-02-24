@@ -25,7 +25,8 @@ class Comment
   validates_presence_of :body
   
   field :path,       :type => Array
-  field :visible_to, :type => Array, :default => [ ]
+  field :visible_to, :type => Array,    :default => [ ]
+  field :deleted_at, :type => DateTime, :default => nil
   
   alias_method :body, :markdown
   
@@ -35,6 +36,22 @@ class Comment
     else
       where(:privacy => Paper::PRIVACY[:public])
     end
+  end
+  
+  def owned_by?(u)
+    u && u == self.user
+  end
+  
+  def can_delete?(u)
+    owned_by?(u) && !deleted?
+  end
+  
+  def deleted?
+    !!self.deleted_at
+  end
+  
+  def delete!
+    update_attribute(:deleted_at, Time.now)
   end
   
   protected

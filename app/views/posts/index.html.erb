@@ -2,22 +2,22 @@
   <ul>
     <% posts.each do |p| %>
       <li>
-        <% unless p.published? %>
-          [ <span class="unpublished"><%= t('posts.not_published') %></span> ]
-        <% end %>
-        <% if user_signed_in? %>
-          <div class="actions">
-            <% if p.can_delete?(current_user) %>
-              [ <%= delete_link(p) %> ]
-            <% end %>
-          </div>
-        <% end %>
         <div class="title">
           <%= link_to(post.title, post_path(p)) %>
         </div>
         <div class="datetime">
           <%= published_at(p) %>
         </div>
+        <% if user_signed_in? %>
+          <div class="actions">
+            <% if p.can_delete?(current_user) %>
+              [ <%= delete_link(p) %> ]
+            <% end %>
+            <% if p.can_publish?(current_user) %>
+              [ <%= publish_link(p) %> ]
+            <% end %>
+          </div>
+        <% end %>
         <div class="excerpt">
           <%= p.excerpt.html_safe %>
         </div>

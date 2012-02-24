@@ -11,6 +11,9 @@ en:
   replied: 'replied'
   all_posts: 'All posts'
   sign_in_to_reply: 'sign in to reply'
+  privacy: 'privacy'
+  home: 'home'
+  publish: 'publish'
   posts:
     name: 'posts'
     not_found: 'Not Found'
@@ -24,8 +27,15 @@ en:
       body: Body
       privacy: Privacy
       submit: 'Create Post'
+    publish:
+      confirm: 'You are about to publish this post. Continue?'
     delete:
-      confirm: 'Are you sure you want to delete this post?'
+      confirm: 'You are about to delete a post. All related content and comments will be permanently destroyed. This cannot be undone.'
+  comments:
+    deleted_placeholder: "deleted"
+    deleted: "Your comment was successfully deleted."
+    delete:
+      confirm: 'You are about to delete a comment. What you have written will be destroyed, but any replies to this comment will not be affected. This cannot be undone.'
   doc:
     post:
       public:
@@ -35,3 +45,18 @@ en:
         term: private
         meaning: 'The post will be visible only to logged-in users. Only users who have created and confirmed an account will be able to see this post.'
       publish_at: 'The post will be visible after this time.'
+    comment:
+      post_reply:
+        public:
+          term: public
+          meaning: 'Your comment will be visible to anyone who can view the post.'
+        private:
+          term: private
+          meaning: 'Your comment will only be visible to the post author.'
+      comment_reply:
+        public:
+          term: public
+          meaning: 'Your reply will be visible to anyone who can view the parent.'
+        private:
+          term: private
+          meaning: 'Your reply will only be visible to the parent author.'

@@ -10,12 +10,8 @@
   font-weight: bold;
 }
 
-.datetime {
+.datetime, .deleted {
   color: #888;
-}
-
-#recent-posts {
-  margin-top: 30px;
 }
 
 #recent-posts ul {
@@ -56,8 +52,11 @@ div.post {
 }
 
 .post .datetime {
-  color: #888;
   margin-bottom: 30px;
+}
+
+#recent-posts ul li .actions a {
+  color: #f00;
 }
 
 .comments .comments {
@@ -92,6 +91,16 @@ div.post {
   color: #888;
 }
 
+.comment a.reply-link {
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+
+.comment a.delete-link {
+  color: #f00;
+}
+
 .comment div.collapsable {
   padding-left: 10px;
   margin-left: 5px;
@@ -106,3 +115,19 @@ a.reply-link {
   display: block;
   margin: 0 0 5px 0;
 }
+
+.form .field.privacy {
+  margin-bottom: 10px;
+}
+
+.form .field.privacy .label,
+.form .field.privacy .select {
+  float: left;
+  margin-right: 5px;
+}
+
+.form .field.privacy .explain {
+  display: none;
+}
+
+

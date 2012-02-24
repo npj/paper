@@ -6,18 +6,45 @@
 <% if parent.is_a?(Comment) %>
   <% if user_signed_in? %>
     <%= link_to(t("reply"), new_comment_path, :class => "reply-link", :id => "reply_link_#{parent.id}", 'data-form-id' => "reply_form_#{parent.id}") %>
+    <% if parent.can_delete?(current_user) %>
+      <%= link_to(t('delete'), comment_path(parent), :class => 'delete-link', 'data-method' => 'delete', 'data-confirm' => t('comments.delete.confirm')) %>
+    <% else %>
+      &nbsp;
+    <% end %>
   <% else %>
     <%= link_to(t("sign_in_to_reply"), new_user_session_path) %>
   <% end %>
 <% end %>
 
-<%= form_for Comment.new, :html => { :class => css, :id => "reply_form_#{parent.id}" } do |form| %>
+<%= form_for Comment.new, :html => { :class => "form #{css}", :id => "reply_form_#{parent.id}" } do |form| %>
   <% if parent.is_a?(Post) %>
     <%= form.hidden_field :post_id, :value => parent.id %>
   <% else %>
     <%= form.hidden_field :parent_id, :value => parent.id %>
   <% end %>
-  <%= form.text_area(:markdown, :rows => 8, :cols => 70) %>
+  <div class="field privacy">
+    <div class="label"><%= form.label(:privacy, t('privacy')) %>:</div>
+    <div class="select"><%= form.select(:privacy, Paper::PRIVACY) %></div>
+    <div class="info">
+      <%= link_to("?", comments_path, :class => "info-link", 'data-id' => parent.id) %>
+    </div>
+    <div class="explain">
+      <% if parent.is_a?(Post) %>
+        <ul>
+          <li><strong><%= t('doc.comment.post_reply.public.term') %></strong>: <%= t('doc.comment.post_reply.public.meaning') %></li>
+          <li><strong><%= t('doc.comment.post_reply.private.term') %></strong>: <%= t('doc.comment.post_reply.private.meaning') %></li>
+        </ul>
+      <% else %>
+        <ul>
+          <li><strong><%= t('doc.comment.comment_reply.public.term') %></strong>: <%= t('doc.comment.comment_reply.public.meaning') %></li>
+          <li><strong><%= t('doc.comment.comment_reply.private.term') %></strong>: <%= t('doc.comment.comment_reply.private.meaning') %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="textarea"><%= form.text_area(:markdown, :rows => 8, :cols => 70) %></div>
+  </div>
   <div class="actions">
     <% if parent.is_a?(Comment) %>
       <%= link_to(t('cancel'), new_comment_path, :class => "cancel", 'data-form-id' => "reply_form_#{parent.id}", 'data-link-id' => "reply_link_#{parent.id}") %>

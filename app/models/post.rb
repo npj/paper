@@ -31,6 +31,10 @@ class Post
     user && self.user == user
   end
   
+  def can_publish?(user)
+    !self.published? && user && (owned_by?(user) || user.has_role?(:publish_posts))
+  end
+  
   def can_delete?(user)
     user && (owned_by?(user) || user.has_role?(:delete_posts))
   end
