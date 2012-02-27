@@ -41,23 +41,25 @@ h2 {
 }
 
 #header .notice,
-#header .error {
+#header .alert {
   width: 600px;
   margin: 0 125px;
   position: fixed;
   top: 0;
   padding: 5px;
-  border: 2px solid #8c8;
-  border-top-width: 0px;
   text-align: center;
 }
 
 #header .notice {
+  border: 2px solid #8c8;
+  border-top-width: 0px;
   background-color: #aea;
   color: #484;
 }
 
-#header .error {
+#header .alert {
+  border: 2px solid #c88;
+  border-top-width: 0px;
   background-color: #eaa;
   color: #844;
 }
