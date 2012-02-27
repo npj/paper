@@ -1,3 +1,4 @@
+<a name="<%= comment.id %>"></a>
 <div class="comment" data-id="<%= comment.id %>" data-parent-id="<%= comment.parent.try(:id) %>">
   <%= link_to("-", comments_path, :class => "comment-collapse", 'data-collapsed' => false) %>
   <div class="comment-user">
@@ -12,7 +13,7 @@
   </div>
   <div class="collapsable">
     <div class="comment-body">
-      <%= (comment.deleted? ? "" : comment.html).html_safe  %>
+      <%= (comment.deleted? ? "<p class=\"deleted\">...</p>" : comment.html).html_safe  %>
     </div>
     <%= render(:partial => "comments/reply", :locals => { :parent => comment }) %>
     <% unless comment.comments.empty? %>

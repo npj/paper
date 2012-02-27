@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new((params[:comment] || { }).merge(:user => current_user))
     if @comment.save
-      redirect_to(post_path(@comment.post))
+      redirect_to(post_path(@comment.post, :anchor => @comment.id))
     else
       Rails.logger.info("@comment.errors: #{@comment.errors.full_messages.inspect}")
     end

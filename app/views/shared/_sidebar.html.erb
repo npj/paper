@@ -3,12 +3,15 @@
 </div>
 <div class="user">
   <% if user_signed_in? %>
-    <span class="name"><%= current_user.name %></span>
+    <div class="name"><%= current_user.name %></div>
+    <div class="edit">(<%= link_to(t('devise.registrations.edit'), edit_user_registration_path) %>)</div>
     <% if current_user.has_role?(:write_posts) %>
       <%= link_to_unless_current(t('new'), new_post_path) %>
     <% end %>
-    <%= link_to(t('sign_out'), destroy_user_session_path, :method => :delete) %>
+    <%= link_to(t('devise.sessions.sign_out'), logout_path, :method => :delete) %>
   <% else %>
-    <%= link_to(t('sign_in'), new_user_session_path) %>
+    <%= link_to(t('devise.sessions.sign_in'), login_path) %>
+    <br />
+    <%= link_to(t('devise.registrations.sign_up'), signup_path) %>
   <% end %>
 </div>

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [ :index, :show ]
+  before_filter :authenticate_user!, :except => [ :index, :show, :publish ]
   
   before_filter :find_posts, :only   => :index
   before_filter :find_post,  :except => [ :index, :new, :create ]
@@ -22,9 +22,20 @@ class PostsController < ApplicationController
     end
   end
   
-  def destroy 
-    @post.destroy
-    redirect_to(root_url)
+  def destroy
+    if @post.owned_by?(current_user)
+      @post.destroy
+      flash[:notice] = t('posts.delete.success')
+    end
+    redirect_to(root_path)
+  end
+  
+  def publish
+    if @post.owned_by?(current_user)
+      @post.publish!
+      flash[:notice] = t('posts.publish.success')
+    end
+    redirect_to(post_path(@post))
   end
   
   protected

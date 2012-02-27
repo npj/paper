@@ -4,10 +4,10 @@ module PostsHelper
   end
   
   def publish_link(post)
-    link_to(t('publish'), post_path(p), :method => :post, :confirm => t('posts.publish.confirm'))
+    link_to(t('publish'), publish_post_path(post), :method => :post, :confirm => t('posts.publish.confirm'))
   end
   
   def delete_link(post)
-    link_to(t('delete'), post_path(p), :method => :delete, :confirm => t('posts.delete.confirm'))
+    link_to(t('delete'), post_path(post), :method => :delete, :confirm => t('posts.delete.confirm'))
   end
 end

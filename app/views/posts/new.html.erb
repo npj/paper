@@ -1,16 +1,19 @@
 <%= form_for(@post) do |form| %>
   <div class="form post new">
     <div class="field">
-      <div class="label"><%= form.label(:title, t('.title')) %></div>
-      <div class="text"><%= form.text_field(:title) %></div>
+      <%= form.label(:title, t('.title')) %>
+      <%= form.text_field(:title) %>
     </div>
     <div class="field">
-      <div class="label"><%= form.label(:markdown, t('.body')) %></div>
-      <div class="textarea"><%= form.text_area(:markdown) %></div>
+      <%= form.label(:markdown, t('.body')) %>
+      <%= form.text_area(:markdown) %>
     </div>
-    <div class="field">
-      <div class="label"><%= form.label(:privacy, t('.privacy')) %></div>
-      <div class="select"><%= form.select(:privacy, Paper::PRIVACY) %></div>
+    <div class="field privacy">
+      <%= form.label(:privacy, t('.privacy')) %>
+      <%= form.select(:privacy, Paper::PRIVACY) %>
+      <div class="info">
+        <%= link_to("?", posts_path, :class => "info-link") %>
+      </div>
       <div class="explain">
         <ul>
           <li><strong><%= t('doc.post.public.term') %></strong>: <%= t('doc.post.public.meaning') %></li>
@@ -18,18 +21,14 @@
         </ul>
       </div>
     </div>
-    <div class="field">
-      <div class="label"><%= form.label(:published_at, t('.publish_at')) %></div>
-      <div class="datetime"><%= form.datetime_select(:published_at) %></div>
+    <div class="field publish">
+      <%= form.label(:published_at, t('.publish_at')) %>
+      <%= form.datetime_select(:published_at) %>
       <div class="explain"><%= t('doc.post.publish_at') %></div>
     </div>
     <div class="actions">
-      <div class="cancel">
-        <%= link_to(t('cancel'), root_path) %>
-      </div>
-      <div class="submit">
-        <button class="submit"><%= t('.submit') %></button>
-      </div>
+      <%= link_to(t('cancel'), root_path, :class => "cancel-link") %>
+      <%= form.submit(t('.submit')) %>
     </div>
   </div>
 <% end %>

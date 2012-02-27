@@ -8,6 +8,16 @@
   <div class="datetime">
     <%= published_at(@post) %>
   </div>
+  <% if user_signed_in? %>
+    <div class="actions danger">
+      <% if @post.can_delete?(current_user) %>
+        [ <%= delete_link(@post) %> ]
+      <% end %>
+      <% if @post.can_publish?(current_user) %>
+        [ <%= publish_link(@post) %> ]
+      <% end %>
+    </div>
+  <% end %>
   <div class="body">
     <%= @post.html.html_safe %>
   </div>

@@ -43,8 +43,13 @@ class Post
     self.published_at <= Time.now
   end
   
-  def excerpt
-    RDiscount.new(self.markdown.split(/\n/).first).to_html
+  def publish!
+     self.published_at = Time.now
+     self.save
+  end
+  
+  def excerpt(more_link)
+    RDiscount.new(self.markdown.split(/\n/).first + " " + more_link).to_html
   end
   
   protected

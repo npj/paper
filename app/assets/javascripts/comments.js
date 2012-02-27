@@ -7,7 +7,7 @@ $(window).ready(function() {
     });
   });
   
-  $(".reply-form .cancel").each(function(index, link) {
+  $(".form.reply .cancel").each(function(index, link) {
     $(link).click(function(e) {
       e.preventDefault();
       $("#" + $(link).data("form-id")).hide();

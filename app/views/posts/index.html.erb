@@ -19,11 +19,15 @@
           </div>
         <% end %>
         <div class="excerpt">
-          <%= p.excerpt.html_safe %>
+          <%= p.excerpt(link_to(t('read_more'), post_path(p))).html_safe %>
         </div>
         <div class="comments-count">
-          <%= link_to(pluralize(p.all_comments.visible_to(current_user).count, t("posts.comments_count")), post_path(p)) %>
+          <%= link_to(pluralize(p.all_comments.where(:deleted_at => nil).visible_to(current_user).count, t("posts.comments_count")), post_path(p)) %>
         </div>
+        
+        <% unless p == posts.last %>
+          <div class="spacer"></div>
+        <% end %>
       </li>
     <% end %>
   </ul>

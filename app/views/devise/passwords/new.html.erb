@@ -1,12 +1,20 @@
-<h2>Forgot your password?</h2>
+<div class="accounts password">
+  <h2><%= t('devise.passwords.forgot') %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+    <div class="form password new">
+      <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+      <div class="actions">
+        <%= f.submit t('devise.passwords.reset') %>
+      </div>
+    </div>
+  <% end %>
 
-<%= render "links" %>
+  <%= render "links" %>
+</div>

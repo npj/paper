@@ -3,8 +3,6 @@
 
 en:
   new: 'write new post'
-  sign_in: 'sign in'
-  sign_out: 'sign out'
   cancel: 'cancel'
   delete: 'delete'
   reply: 'reply'
@@ -14,23 +12,27 @@ en:
   privacy: 'privacy'
   home: 'home'
   publish: 'publish'
+  read_more: 'read full post'
+  save: 'save'
   posts:
     name: 'posts'
     not_found: 'Not Found'
-    not_published: 'Not Published'
     comments_count: "comment"
     create:
-      success:  'Success'
-      failure:  'Failure'
+      success:  'Your post was successfully created.'
+      failure:  'Your post was unable to be created.'
     new:
-      title: Title
-      body: Body
-      privacy: Privacy
-      submit: 'Create Post'
+      title: title
+      body: body
+      privacy: privacy
+      submit: 'create post'
+      publish_at: 'publish at'
     publish:
       confirm: 'You are about to publish this post. Continue?'
+      success: 'Your post was successfully published.'
     delete:
       confirm: 'You are about to delete a post. All related content and comments will be permanently destroyed. This cannot be undone.'
+      success: 'Your post was successfully deleted.'
   comments:
     deleted_placeholder: "deleted"
     deleted: "Your comment was successfully deleted."
@@ -43,7 +45,7 @@ en:
         meaning: 'The post will be visible to the entire internet. Anyone will be able to see this post.'
       private:
         term: private
-        meaning: 'The post will be visible only to logged-in users. Only users who have created and confirmed an account will be able to see this post.'
+        meaning: 'The post will be visible only to logged-in users. Only users who have created an account and are logged-in will be able to see this post.'
       publish_at: 'The post will be visible after this time.'
     comment:
       post_reply:
