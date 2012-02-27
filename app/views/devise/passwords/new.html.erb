@@ -3,7 +3,8 @@
 
   <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
     <div class="form password new">
-      <%= devise_error_messages! %>
+      
+      <%= error_messages(resource) %>
 
       <div class="field">
         <%= f.label :email %>

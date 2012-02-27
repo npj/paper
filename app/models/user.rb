@@ -4,6 +4,8 @@ class User
   
   include Paper::Roles::User
   
+  validates_presence_of :name
+  
   field :name
   
   # Include default devise modules. Others available are:

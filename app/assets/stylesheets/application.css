@@ -13,7 +13,7 @@
 */
 
 .danger a {
-  color: #f00;
+  color: #f44;
 }
 
 body {
@@ -215,4 +215,16 @@ textarea {
 .accounts .links a.forgot-link,
 .accounts.password .links a.signup-link {
   padding-left: 10px;
+}
+
+.field_with_errors label {
+  color: #f44;
+}
+
+ul.error-messages {
+  padding: 10px;
+  list-style-type: none;
+  background-color: #eaa;
+  border: 2px solid #c88;
+  color: #844;
 }
