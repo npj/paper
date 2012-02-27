@@ -4,10 +4,10 @@ Paper::Application.routes.draw do
   end
   resources :comments
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "accounts" }
   
   devise_scope :user do
-    get    "/signup" => "devise/registrations#new", :as => :signup
+    get    "/signup" => "accounts#new",             :as => :signup
     get    "/login"  => "devise/sessions#new",      :as => :login
     delete "/logout" => "devise/sessions#destroy",  :as => :logout
   end

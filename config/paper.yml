@@ -5,6 +5,9 @@ development:
     name: <%= ENV['PAPER_OWNER_NAME'] %>
     email: <%= ENV['PAPER_OWNER_EMAIL'] %>
     password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
+  recaptcha:
+    public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
+    private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>
 
 test:
   host: <%= ENV['PAPER_HOST'] %>
@@ -13,6 +16,9 @@ test:
     name: <%= ENV['PAPER_OWNER_NAME'] %>
     email: <%= ENV['PAPER_OWNER_EMAIL'] %>
     password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
+  recaptcha:
+    public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
+    private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>
 
 production:
   host: <%= ENV['PAPER_HOST'] %>
@@ -21,3 +27,6 @@ production:
     name: <%= ENV['PAPER_OWNER_NAME'] %>
     email: <%= ENV['PAPER_OWNER_EMAIL'] %>
     password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
+  recaptcha:
+    public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
+    private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>

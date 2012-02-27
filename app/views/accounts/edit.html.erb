@@ -1,5 +1,5 @@
 <div class="accounts edit">
-  <h2><%= t('devise.registrations.edit_details') %></h2>
+  <h2><%= t('devise.accounts.edit_details') %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :autocomplete => :off }) do |f| %>
     <div class="form account edit">
@@ -19,7 +19,7 @@
         <%= f.label :password, t('devise.password') %>
         <%= f.password_field :password %>
         <div class="explain">
-          <%= t('devise.registrations.explain_change_password') %>
+          <%= t('devise.accounts.explain_change_password') %>
         </div>
       </div>
 
@@ -27,7 +27,7 @@
         <%= f.label :password_confirmation, t('devise.password_confirmation') %>
         <%= f.password_field :password_confirmation %>
         <div class="explain">
-          <%= t('devise.registrations.explain_change_password') %>
+          <%= t('devise.accounts.explain_change_password') %>
         </div>
       </div>
 
@@ -35,17 +35,17 @@
         <%= f.label :current_password, t('devise.current_password') %>
         <%= f.password_field :current_password %>
         <div class="explain">
-          <%= t('devise.registrations.need_password') %>
+          <%= t('devise.accounts.need_password') %>
         </div>
       </div>
       
       <div class="actions">
-        <%= f.submit t('devise.registrations.update') %>
+        <%= f.submit t('devise.accounts.update') %>
       </div>
     </div>
   <% end %>
 
   <div class="section">
-    <%= link_to t('devise.registrations.cancel'), registration_path(resource_name), :confirm => t('devise.registrations.cancel_confirm'), :method => :delete, :class => "cancel-link danger" %>
+    <%= link_to t('devise.accounts.cancel'), registration_path(resource_name), :confirm => t('devise.accounts.cancel_confirm'), :method => :delete, :class => "cancel-link danger" %>
   </div>
 </div>

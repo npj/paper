@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem "devise"
 gem "bson_ext"
 gem "mongoid"
+gem 'rack-recaptcha', :require => "rack/recaptcha"
 
 group :development, :test do
   gem "rspec-rails"

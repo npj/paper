@@ -4,7 +4,7 @@
 <div class="user">
   <% if user_signed_in? %>
     <div class="name"><%= current_user.name %></div>
-    <div class="edit">(<%= link_to(t('devise.registrations.edit'), edit_user_registration_path) %>)</div>
+    <div class="edit">(<%= link_to(t('devise.accounts.edit'), edit_user_registration_path) %>)</div>
     <% if current_user.has_role?(:write_posts) %>
       <%= link_to_unless_current(t('new'), new_post_path) %>
     <% end %>
@@ -12,6 +12,6 @@
   <% else %>
     <%= link_to(t('devise.sessions.sign_in'), login_path) %>
     <br />
-    <%= link_to(t('devise.registrations.sign_up'), signup_path) %>
+    <%= link_to(t('devise.accounts.sign_up'), signup_path) %>
   <% end %>
 </div>

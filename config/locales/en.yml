@@ -14,6 +14,8 @@ en:
   publish: 'publish'
   read_more: 'read full post'
   save: 'save'
+  recaptcha:
+    invalid: 'There was an error with recaptcha. Please re-enter the code.'
   posts:
     name: 'posts'
     not_found: 'Not Found'
