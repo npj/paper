@@ -62,7 +62,7 @@ module Paper
     config.after_initialize do
       Rails.application.reload_routes!
       
-      config.action_mailer.default_url_options = { :host => Paper.config.host }
+      ActionMailer::Base.default_url_options = { :host => Paper.config.host }
       
       Time.zone = Paper.config.time_zone
       
