@@ -3,8 +3,14 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
     
+  include Paper::Liquid
   include Paper::Markdown
   include Paper::Privacy
+  
+  liquifies({
+    :raw_body    => :markdown,
+    :raw_excerpt => :excerpt_markdown
+  })
   
   markdownifies({ 
     :markdown         => :html,
@@ -57,8 +63,8 @@ class Post
      self.save
   end
   
-  def excerpt_markdown
-    self[:excerpt_markdown] || self.markdown.split(/\n/).first
+  def raw_excerpt
+    self[:raw_excerpt].present? ? self[:raw_excerpt] : (self[:raw_body] || "").split(/\n/).first
   end
   
   protected

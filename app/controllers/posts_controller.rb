@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     if @post.update_attributes(params[:post])
       redirect_to(post_path(@post), :notice => t('posts.update.success'))
     else
-      render(:action => :new, :notice => t('posts.update.failure'))
+      render(:action => :new, :alert => t('posts.update.failure'))
     end
   end
   

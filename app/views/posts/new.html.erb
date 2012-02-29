@@ -5,12 +5,12 @@
       <%= form.text_field(:title) %>
     </div>
     <div class="field excerpt">
-      <%= form.label(:excerpt_markdown, t('.excerpt')) %>
-      <%= form.text_area(:excerpt_markdown, :rows => 7) %>
+      <%= form.label(:raw_excerpt, t('.excerpt')) %>
+      <%= form.text_area(:raw_excerpt, :rows => 7) %>
     </div>
     <div class="field body">
-      <%= form.label(:markdown, t('.body')) %>
-      <%= form.text_area(:markdown) %>
+      <%= form.label(:raw_body, t('.body')) %>
+      <%= form.text_area(:raw_body) %>
     </div>
     <div class="field privacy">
       <%= form.label(:privacy, t('.privacy')) %>
@@ -32,7 +32,7 @@
     </div>
     <div class="actions">
       <%= link_to(t('cancel'), root_path, :class => "cancel-link") %>
-      <%= form.submit(t('.submit')) %>
+      <%= form.submit(@post.new_record?  ? t('.save') : t('.update')) %>
     </div>
   </div>
 <% end %>

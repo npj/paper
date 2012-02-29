@@ -6,7 +6,7 @@
   color: #f44;
 }
 
-.title {
+div.post .title {
   font-weight: bold;
 }
 
@@ -44,7 +44,7 @@ div.post ^ .form {
   margin-top: 30px;
 }
 
-.post .title {
+div.post .title {
   font-size: 30px;
   margin: 0px 0px 30px 0px;
   line-height: 35px;
@@ -130,6 +130,11 @@ div.post ^ .form {
 a.reply-link {
   display: block;
   margin: 0 0 5px 0;
+}
+
+.form.post.new .title {
+  font-size: 14px;
+  font-weight: normal;
 }
 
 .form.post.new .field {

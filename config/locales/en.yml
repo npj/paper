@@ -32,7 +32,8 @@ en:
       excerpt: excerpt
       body: body
       privacy: privacy
-      submit: 'create post'
+      save: 'create post'
+      update: 'update post'
       publish_at: 'publish at'
     publish:
       confirm: 'You are about to publish this post. Continue?'

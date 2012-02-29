@@ -15,6 +15,7 @@ gem "bson_ext"
 gem "mongoid"
 gem 'rack-recaptcha', :require => "rack/recaptcha"
 gem 'aws-s3',         :require => 'aws/s3'
+gem 'liquid'
 
 group :development, :test do
   gem "rspec-rails"
