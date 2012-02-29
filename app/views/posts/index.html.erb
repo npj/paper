@@ -22,10 +22,10 @@
           </div>
         <% end %>
         <div class="excerpt">
-          <%= p.excerpt(link_to(t('read_more'), post_path(p))).html_safe %>
+          <%= p.excerpt_html.html_safe %>
         </div>
         <div class="comments-count">
-          <%= link_to(pluralize(p.all_comments.where(:deleted_at => nil).visible_to(current_user).count, t("posts.comments_count")), post_path(p)) %>
+          <%= post_link(p) %>
         </div>
         
         <% unless p == posts.last %>

@@ -29,6 +29,7 @@ en:
       failure: 'Your post was unable to be updated.'
     new:
       title: title
+      excerpt: excerpt
       body: body
       privacy: privacy
       submit: 'create post'

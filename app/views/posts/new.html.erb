@@ -1,10 +1,14 @@
 <%= form_for(@post) do |form| %>
   <div class="form post new">
-    <div class="field">
+    <div class="field title">
       <%= form.label(:title, t('.title')) %>
       <%= form.text_field(:title) %>
     </div>
-    <div class="field">
+    <div class="field excerpt">
+      <%= form.label(:excerpt_markdown, t('.excerpt')) %>
+      <%= form.text_area(:excerpt_markdown, :rows => 7) %>
+    </div>
+    <div class="field body">
       <%= form.label(:markdown, t('.body')) %>
       <%= form.text_area(:markdown) %>
     </div>

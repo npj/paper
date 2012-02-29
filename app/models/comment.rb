@@ -8,6 +8,8 @@ class Comment
   include Paper::Markdown
   include Paper::Privacy
   
+  markdownifies(:markdown => :html)
+  
   before_validation :set_post,       :on => :create
   before_validation :set_path,       :on => :create
   before_validation :set_visible_to, :on => :create

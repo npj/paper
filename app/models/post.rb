@@ -5,6 +5,11 @@ class Post
     
   include Paper::Markdown
   include Paper::Privacy
+  
+  markdownifies({ 
+    :markdown         => :html,
+    :excerpt_markdown => :excerpt_html
+  })
       
   belongs_to :user
   has_many :all_comments, :class_name => 'Comment', :dependent => :destroy
@@ -52,8 +57,8 @@ class Post
      self.save
   end
   
-  def excerpt(more_link)
-    RDiscount.new(self.markdown.split(/\n/).first + " " + more_link).to_html
+  def excerpt_markdown
+    self[:excerpt_markdown] || self.markdown.split(/\n/).first
   end
   
   protected
