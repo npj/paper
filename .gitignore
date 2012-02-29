@@ -16,3 +16,4 @@
 /log/*.log
 /tmp
 paper_env
+*.tmproj
