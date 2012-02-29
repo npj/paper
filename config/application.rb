@@ -64,6 +64,11 @@ module Paper
       
       ActionMailer::Base.default_url_options = { :host => Paper.config.host }
       
+      AWS::S3::Base.establish_connection!({ 
+        :access_key_id     => Paper.config.s3.key, 
+        :secret_access_key => Paper.config.s3.secret 
+      })
+      
       Time.zone = Paper.config.time_zone
       
       User.create_owner 

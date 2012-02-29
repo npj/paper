@@ -1,4 +1,4 @@
-development:
+defaults: &defaults
   host: <%= ENV['PAPER_HOST'] %>
   time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
   owner:
@@ -8,25 +8,11 @@ development:
   recaptcha:
     public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
     private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>
+  s3:
+    key:    <%= ENV['PAPER_S3_KEY'] %>
+    secret: <%= ENV['PAPER_S3_SECRET'] %>
+    bucket: <%= ENV['PAPER_S3_BUCKET'] %>
 
-test:
-  host: <%= ENV['PAPER_HOST'] %>
-  time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
-  owner:
-    name: <%= ENV['PAPER_OWNER_NAME'] %>
-    email: <%= ENV['PAPER_OWNER_EMAIL'] %>
-    password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
-  recaptcha:
-    public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
-    private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>
-
-production:
-  host: <%= ENV['PAPER_HOST'] %>
-  time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
-  owner:
-    name: <%= ENV['PAPER_OWNER_NAME'] %>
-    email: <%= ENV['PAPER_OWNER_EMAIL'] %>
-    password: <%= ENV['PAPER_OWNER_PASSWORD'] %>
-  recaptcha:
-    public_key: <%= ENV['PAPER_RECAPTCHA_PUBLIC'] %>
-    private_key: <%= ENV['PAPER_RECAPTCHA_PRIVATE'] %>
+development: *defaults
+test: *defaults
+production: *defaults

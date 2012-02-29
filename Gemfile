@@ -14,6 +14,7 @@ gem "devise"
 gem "bson_ext"
 gem "mongoid"
 gem 'rack-recaptcha', :require => "rack/recaptcha"
+gem 'aws-s3',         :require => 'aws/s3'
 
 group :development, :test do
   gem "rspec-rails"
