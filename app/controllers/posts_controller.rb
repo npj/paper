@@ -22,6 +22,18 @@ class PostsController < ApplicationController
     end
   end
   
+  def edit
+    render(:new)
+  end
+  
+  def update
+    if @post.update_attributes(params[:post])
+      redirect_to(post_path(@post), :notice => t('posts.update.success'))
+    else
+      render(:action => :new, :notice => t('posts.update.failure'))
+    end
+  end
+  
   def destroy
     if @post.owned_by?(current_user)
       @post.destroy

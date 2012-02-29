@@ -10,11 +10,14 @@
   </div>
   <% if user_signed_in? %>
     <div class="actions danger">
+      <% if @post.can_edit?(current_user) %>
+        [ <%= post_edit_link(p) %> ]
+      <% end %>
       <% if @post.can_delete?(current_user) %>
-        [ <%= delete_link(@post) %> ]
+        [ <%= post_delete_link(@post) %> ]
       <% end %>
       <% if @post.can_publish?(current_user) %>
-        [ <%= publish_link(@post) %> ]
+        [ <%= post_publish_link(@post) %> ]
       <% end %>
     </div>
   <% end %>
@@ -23,7 +26,7 @@
   </div>
 </div>
 <% if user_signed_in? %>
-  <%= render(:partial => "comments/reply", :locals => { :parent => @post }) %>
+  <%= render(:partial => "comments/actions", :locals => { :parent => @post }) %>
 <% else %>
   <%= link_to(t('sign_in_to_reply'), new_user_session_path) %>
 <% end %>

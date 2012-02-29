@@ -3,6 +3,7 @@
 
 en:
   new: 'write new post'
+  edit: 'edit'
   cancel: 'cancel'
   delete: 'delete'
   reply: 'reply'
@@ -23,6 +24,9 @@ en:
     create:
       success:  'Your post was successfully created.'
       failure:  'Your post was unable to be created.'
+    update:
+      success: 'Your post was successfully updated.'
+      failure: 'Your post was unable to be updated.'
     new:
       title: title
       body: body

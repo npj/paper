@@ -15,7 +15,7 @@
     <div class="comment-body">
       <%= (comment.deleted? ? "<p class=\"deleted\">...</p>" : comment.html).html_safe  %>
     </div>
-    <%= render(:partial => "comments/reply", :locals => { :parent => comment }) %>
+    <%= render(:partial => "comments/actions", :locals => { :parent => comment }) %>
     <% unless comment.comments.empty? %>
       <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
     <% end %>

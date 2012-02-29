@@ -9,12 +9,15 @@
           <%= published_at(p) %>
         </div>
         <% if user_signed_in? %>
-          <div class="actions">
+          <div class="actions danger">
+            <% if p.can_edit?(current_user) %>
+              [ <%= post_edit_link(p) %> ]
+            <% end %>
             <% if p.can_delete?(current_user) %>
-              [ <%= delete_link(p) %> ]
+              [ <%= post_delete_link(p) %> ]
             <% end %>
             <% if p.can_publish?(current_user) %>
-              [ <%= publish_link(p) %> ]
+              [ <%= post_publish_link(p) %> ]
             <% end %>
           </div>
         <% end %>
