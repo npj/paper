@@ -198,4 +198,28 @@ a.reply-link {
   margin: 0px;
 }
 
+.gallery {
+  
+}
+
+.gallery .row {
+  height: 175px;
+}
+  
+.gallery a {
+  display: block;
+  float: left;
+  width: 156px;
+  height: 156px;
+  line-height: 152px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #ddd;
+  padding: 2px 2px;
+  margin: 1px;
+}
+
+.gallery a img {
+  vertical-align: middle;
+}
 

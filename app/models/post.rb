@@ -3,20 +3,20 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
     
-  include Paper::Liquid
   include Paper::Markdown
+  include Paper::Liquid
   include Paper::Privacy
   
-  liquifies({
+  markdownifies({ 
     :raw_body    => :markdown,
     :raw_excerpt => :excerpt_markdown
   })
   
-  markdownifies({ 
-    :markdown         => :html,
-    :excerpt_markdown => :excerpt_html
+  liquifies({
+    :markdown         => :template,
+    :excerpt_markdown => :excerpt_template
   })
-      
+  
   belongs_to :user
   has_many :all_comments, :class_name => 'Comment', :dependent => :destroy
   
@@ -67,7 +67,27 @@ class Post
     self[:raw_excerpt].present? ? self[:raw_excerpt] : (self[:raw_body] || "").split(/\n/).first
   end
   
+  def excerpt_template
+    Marshal.load(self[:excerpt_template])
+  end
+  
+  def template
+    Marshal.load(self[:template])
+  end
+  
+  def excerpt
+    excerpt_template.render('user_id' => user_for_liquid)
+  end
+  
+  def html
+    template.render('user_id' => user_for_liquid)
+  end
+  
   protected
+  
+    def user_for_liquid
+      user.id.to_s
+    end
   
     # before_save
     # publish now if not specified

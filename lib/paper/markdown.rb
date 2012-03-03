@@ -20,13 +20,14 @@ module Paper
       end
     end
     
+    protected
     
-    # before_validation
-    # convert markdown attributes to html
-    def markdownify
-      self.class.markdown_attributes.each do |attribute, into|
-        self[into] = RDiscount.new(self.send(attribute) || "").to_html
+      # before_validation
+      # convert markdown attributes to html
+      def markdownify
+        self.class.markdown_attributes.each do |attribute, into|
+          self[into] = RDiscount.new(self.send(attribute) || "").to_html
+        end
       end
-    end
   end
 end

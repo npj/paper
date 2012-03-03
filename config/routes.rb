@@ -1,7 +1,10 @@
 Paper::Application.routes.draw do
+  
   resources :posts do
     member { post :publish }
   end
+  
+  resources :images
   resources :comments
 
   devise_for :users, :controllers => { :registrations => "accounts" }

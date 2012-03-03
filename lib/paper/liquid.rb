@@ -6,6 +6,8 @@ module Paper
         class_attribute :liquify_attributes
         before_validation :liquify
       end
+      
+      Paper::Liquid::Tags::Gallery
     end
     
     module ClassMethods
@@ -23,13 +25,14 @@ module Paper
       end
     end
     
+    protected
 
-    # before_validation
-    # process and save liquid templates
-    def liquify
-      self.class.liquify_attributes.each do |attribute, into|
-        self[into] = ::Liquid::Template.parse(self.send(attribute) || "").render
+      # before_validation
+      # process and save liquid templates
+      def liquify
+        self.class.liquify_attributes.each do |attribute, into|
+          self[into] = Marshal.dump(::Liquid::Template.parse(self.send(attribute) || ""))
+        end
       end
-    end
   end
 end

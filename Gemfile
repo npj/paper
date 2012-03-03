@@ -21,6 +21,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "fabrication"
   gem "faker"
+  gem 'awesome_print'
 end
 
 gem 'rdiscount'

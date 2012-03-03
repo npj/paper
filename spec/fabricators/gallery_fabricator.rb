@@ -1,0 +1,2 @@
+Fabricator(:gallery) do
+end

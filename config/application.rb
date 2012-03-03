@@ -60,6 +60,7 @@ module Paper
     config.assets.version = '1.0'
     
     config.after_initialize do
+      
       Rails.application.reload_routes!
       
       ActionMailer::Base.default_url_options = { :host => Paper.config.host }
