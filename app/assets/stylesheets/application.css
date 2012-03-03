@@ -230,7 +230,7 @@ ul.error-messages {
 }
 
 #lightbox {
-  position: fixed;
+  position: absolute;
   top: 50px;
   margin: 0 auto;
   background-color: #000;

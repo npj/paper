@@ -1,9 +1,6 @@
 var lightbox = { 
   html    : '\
   <div id="lightbox" style="display:none;"> \
-    <div class="actions"> \
-      [ <a href="" class="close">X</a> ] \
-    </div> \
     <div class="content"></div> \
   </div>',
   
@@ -23,12 +20,11 @@ var lightbox = {
         
         img = $('#lightbox .content img');
         
-        //$('#lightbox').width(img.width());
-        //$('#lightbox').height(img.height() + 40);
+        $("#lightbox").css('top', $("body").scrollTop() + 50);
       }
     });
     
-    $('#lightbox .actions a').click(function(e) {
+    $('#lightbox').click(function(e) {
       e.preventDefault();
       $(document).trigger("hide.lightbox");
     });
@@ -38,12 +34,11 @@ var lightbox = {
     });
     
     $(document).bind('destroy.lightbox', function(e) {
+      $('#lightbox').unbind("click");
+
       $("#lightbox").remove();
       $('#lightbox_overlay').remove();
 
-      $(document).unbind('hide.lightbox');
-
-      $('#lightbox .actions a').unbind("click");
       $(document).unbind('hide.lightbox');
       $(document).unbind('destroy.lightbox');
       
