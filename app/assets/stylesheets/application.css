@@ -228,3 +228,23 @@ ul.error-messages {
   border: 2px solid #c88;
   color: #844;
 }
+
+#lightbox {
+  position: fixed;
+  top: 50px;
+  margin: 0 auto;
+  background-color: #000;
+  border: 2px solid #ccc;
+  z-index: 2;
+}
+
+#lightbox_overlay {
+  position: fixed;
+  opacity: 0.6;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  z-index: 1;
+}

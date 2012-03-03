@@ -2,6 +2,8 @@ class Image
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  has_many :comments, :dependent => :destroy
+  
   belongs_to :gallery
   
   field :name
