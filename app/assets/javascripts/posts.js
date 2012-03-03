@@ -21,7 +21,7 @@ var lightbox = {
         
         $("#lightbox").css('top', $("body").scrollTop() + 30);
         img.load(function() {
-          $('#lightbox').show();
+          $('#lightbox').fadeIn(500);
           $("#lightbox").css("width", $(this).width());
           $("#lightbox").css("left", ($(window).width() / 2) - ($(this).width() / 2));
         });
