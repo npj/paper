@@ -11,7 +11,6 @@ var lightbox = {
     $("body").append(lightbox.overlay);
     
     $('#lightbox_overlay').fadeIn(500);
-    $('#lightbox').show();
     
     $.ajax({
       url     : href + ".json",
@@ -20,11 +19,21 @@ var lightbox = {
         
         img = $('#lightbox .content img');
         
-        $("#lightbox").css('top', $("body").scrollTop() + 50);
+        $("#lightbox").css('top', $("body").scrollTop() + 30);
+        img.load(function() {
+          $('#lightbox').show();
+          $("#lightbox").css("width", $(this).width());
+          $("#lightbox").css("left", ($(window).width() / 2) - ($(this).width() / 2));
+        });
       }
     });
     
     $('#lightbox').click(function(e) {
+      e.preventDefault();
+      $(document).trigger("hide.lightbox");
+    });
+    
+    $("#lightbox_overlay").click(function(e) {
       e.preventDefault();
       $(document).trigger("hide.lightbox");
     });
@@ -35,6 +44,7 @@ var lightbox = {
     
     $(document).bind('destroy.lightbox', function(e) {
       $('#lightbox').unbind("click");
+      $("#lightbox_overlay").unbind("click");
 
       $("#lightbox").remove();
       $('#lightbox_overlay').remove();
