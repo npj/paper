@@ -89,7 +89,6 @@ var lightbox = {
 
       $(document).unbind('hide.lightbox');
       $(document).unbind('destroy.lightbox');
-      
     });
   },
   
@@ -105,14 +104,62 @@ var lightbox = {
     
     var loadImage = function(data) {
       
+      var lb   = $('#lightbox');
+      var nav  = $("#lightbox div.nav")
+      
       var prev = $("#lightbox div.nav div.prev a");
       var next = $("#lightbox div.nav div.next a");
+      
+      var img = $('#lightbox .content img');
+      
+      if(img.length == 0) {
+        $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
+        img = $('#lightbox .content img');
+        
+        img.load(function() {
+
+          lb.fadeIn(500);
+          lb.css("width", $(this).width());
+          nav.css("width", $(this).width());
+
+          lb.css("height", $(this).height());
+          lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
+
+          console.log("FAAAADEIN");
+          $(this).fadeIn(500);
+        });
+        
+      }
+      else {
+        img.fadeOut(500).queue(function() {
+          img.remove();
+          $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
+          img = $('#lightbox .content img').first();
+          
+          img.load(function() {
+
+            lb.fadeIn(500);
+            lb.css("width", $(this).width());
+            nav.css("width", $(this).width());
+
+            lb.css("height", $(this).height());
+            lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
+
+            $(this).fadeIn(500);
+          });
+          
+          $(this).dequeue();
+        });
+      }
+      
+      prev.unbind('click');
+      next.unbind('click');
       
       if(data.prev) {
         prev.attr('href', data.prev);
         prev.show();
-        prev.click(function(e) {
-          e.preventDefault();
+        prev.click(function(prevClick) {
+          prevClick.preventDefault();
           $.ajax({
             url     : prev.attr('href') + ".json",
             success : loadImage
@@ -126,8 +173,8 @@ var lightbox = {
       if(data.next) {
         next.attr('href', data.next);
         next.show();
-        next.click(function(e) {
-          e.preventDefault();
+        next.click(function(nextClick) {
+          nextClick.preventDefault();
           $.ajax({
             url     : next.attr('href') + ".json",
             success : loadImage
@@ -137,25 +184,6 @@ var lightbox = {
       else {
         next.hide();
       }
-      
-      $('#lightbox .content img').remove();
-      
-      $('#lightbox .content').html("<img src=\"" + data.url + "\" />");
-      
-      var img = $('#lightbox .content img');
-      
-      img.load(function() {
-        
-        var lb   = $('#lightbox');
-        var nav  = $("#lightbox div.nav")
-        
-        lb.fadeIn(500);
-        lb.css("width", $(this).width());
-        nav.css("width", $(this).width());
-        
-        lb.css("height", $(this).height());
-        lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
-      });
     };
     
     $.ajax({
