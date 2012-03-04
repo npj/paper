@@ -1,42 +1,78 @@
 var lightbox = { 
   html    : '\
   <div id="lightbox" style="display:none;"> \
+    <div class="nav"> \
+      <div class="prev"><a href="">&laquo;</a></div> \
+      <div class="next"><a href="">&raquo;</a></div> \
+    </div> \
     <div class="content"></div> \
   </div>',
   
   overlay : '<div id="lightbox_overlay" style="display:none;"></div>',
+  lastmove : 0,
+  navDelay : 1000,
+  mouseNav : false,
   
-  show : function(href) {
+  show : function(target) {
     $('body').append(lightbox.html);
     $("body").append(lightbox.overlay);
     
-    $('#lightbox_overlay').fadeIn(500);
+    var lb  = $("#lightbox");
+    var nav = $('#lightbox div.nav');
+    var ol  = $('#lightbox_overlay');
     
-    $.ajax({
-      url     : href + ".json",
-      success : function(data) {
-        $('#lightbox .content').html("<img src=\"" + data.url + "\" />");
+    lb.css('top', $("body").scrollTop() + 30);
+    ol.fadeIn(500);
+    
+    this.getImage(target.attr('href'));
+    
+    nav.mouseenter(function() {
+      lightbox.mouseNav = true;
+    });
+    
+    nav.mouseleave(function() {
+      lightbox.mouseNav = false;
+    });
+    
+    lb.mousemove(function(e) {
+      
+      lightbox.lastmove = e.timeStamp;
+      
+      var navHide = function(e1) {
         
-        img = $('#lightbox .content img');
+        var since = (new Date()).getTime() - lightbox.lastmove;
         
-        $("#lightbox").css('top', $("body").scrollTop() + 30);
-        img.load(function() {
-          $('#lightbox').fadeIn(500);
-          $("#lightbox").css("width", $(this).width());
-          $("#lightbox").css("height", $(this).height());
-          $("#lightbox").css("left", ($(window).width() / 2) - ($(this).width() / 2));
-        });
+        if(!lightbox.mouseNav && since >= lightbox.navDelay) {
+          $(this).fadeOut(250).queue(function(e2) {
+            nav.data('visible', false);
+            $(this).dequeue();
+          });
+        }
+        else {
+          $(this).delay(250).queue(navHide);
+        }
+        
+        $(this).dequeue();
+      };
+      
+      if(!nav.data('visible')) {
+        nav.fadeIn(250).delay(lightbox.navDelay).queue(navHide);
+        nav.data('visible', true);
       }
     });
     
-    $('#lightbox').click(function(e) {
+    lb.click(function(e) {
       e.preventDefault();
-      $(document).trigger("hide.lightbox");
+      if(!lightbox.mouseNav) {
+        $(document).trigger("hide.lightbox");
+      }
     });
     
-    $("#lightbox_overlay").click(function(e) {
+    ol.click(function(e) {
       e.preventDefault();
-      $(document).trigger("hide.lightbox");
+      if(!lightbox.mouseNav) {
+        $(document).trigger("hide.lightbox");
+      }
     });
     
     $(document).bind('hide.lightbox', function(e) {
@@ -44,11 +80,12 @@ var lightbox = {
     });
     
     $(document).bind('destroy.lightbox', function(e) {
-      $('#lightbox').unbind("click");
-      $("#lightbox_overlay").unbind("click");
+      lb.unbind("click");
+      lb.unbind('mousemove');
+      ol.unbind("click");
 
-      $("#lightbox").remove();
-      $('#lightbox_overlay').remove();
+      lb.remove();
+      ol.remove();
 
       $(document).unbind('hide.lightbox');
       $(document).unbind('destroy.lightbox');
@@ -62,12 +99,75 @@ var lightbox = {
       $(this).dequeue();
     });
     $('#lightbox_overlay').fadeOut(500);
+  },
+  
+  getImage : function(img_url) {
+    
+    var loadImage = function(data) {
+      
+      var prev = $("#lightbox div.nav div.prev a");
+      var next = $("#lightbox div.nav div.next a");
+      
+      if(data.prev) {
+        prev.attr('href', data.prev);
+        prev.show();
+        prev.click(function(e) {
+          e.preventDefault();
+          $.ajax({
+            url     : prev.attr('href') + ".json",
+            success : loadImage
+          });
+        });
+      } 
+      else {
+        prev.hide();
+      }
+      
+      if(data.next) {
+        next.attr('href', data.next);
+        next.show();
+        next.click(function(e) {
+          e.preventDefault();
+          $.ajax({
+            url     : next.attr('href') + ".json",
+            success : loadImage
+          });
+        });
+      } 
+      else {
+        next.hide();
+      }
+      
+      $('#lightbox .content img').remove();
+      
+      $('#lightbox .content').html("<img src=\"" + data.url + "\" />");
+      
+      var img = $('#lightbox .content img');
+      
+      img.load(function() {
+        
+        var lb   = $('#lightbox');
+        var nav  = $("#lightbox div.nav")
+        
+        lb.fadeIn(500);
+        lb.css("width", $(this).width());
+        nav.css("width", $(this).width());
+        
+        lb.css("height", $(this).height());
+        lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
+      });
+    };
+    
+    $.ajax({
+      url     : img_url + ".json",
+      success : loadImage
+    });
   }
 };
 
 function openLightbox(event) {
   event.preventDefault();
-  lightbox.show($(event.delegateTarget).attr('href'));
+  lightbox.show($(event.delegateTarget));
 }
 
 $(window).ready(function() {

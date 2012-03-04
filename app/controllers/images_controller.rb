@@ -8,7 +8,11 @@ class ImagesController < ApplicationController
         redirect_to(@image.url(:large))
       end
       format.json do
-        render :json => { :url => @image.url(:large) }
+        render :json => { 
+          :url  => @image.url(:large), 
+          :prev => (@image.prev ? image_path(@image.prev) : ""), 
+          :next => (@image.next ? image_path(@image.next) : "")
+        }
       end
     end
   end

@@ -11,6 +11,14 @@ class Image
   
   validates_presence_of :name, :sequence
   
+  def prev
+    gallery.images.where(:sequence => sequence - 1).first
+  end
+  
+  def next
+    gallery.images.where(:sequence => sequence + 1).first
+  end
+  
   def path(size)
     "#{self.gallery.name}/#{size}/#{name}"
   end

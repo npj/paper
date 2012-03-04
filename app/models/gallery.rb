@@ -13,6 +13,8 @@ class Gallery
   validates_presence_of :user, :name
   validates_uniqueness_of :name
   
+  validate :ensure_exists
+  
   after_create :reindex
   
   def self.find_by_name(name)
@@ -28,6 +30,13 @@ class Gallery
   end
   
   protected
+  
+    # validate
+    def ensure_exists
+      unless AWS::S3::S3Object.exists?(self.name + "/", Paper.config.s3.bucket)
+        errors.add(:base, "gallery does not exist")
+      end
+    end
   
     def prefix(thumb)
       "#{self.name}/#{thumb}"

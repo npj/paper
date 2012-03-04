@@ -16,11 +16,18 @@ module Paper
         def render(context)
           result = ''
           row    = 0
+          
+          unless (gallery = ::Gallery.find_or_create_by(:name => @name, :user_id => context['user_id'])).valid?
+            raise gallery.errors.full_messages.join("\n")
+          end
+          
           context.stack do
             
-            ::Gallery.user(context['user_id']).find_by_name(@name).images.order_by([ :sequence, :asc ]).each do |img|
+            gallery.images.order_by([ :sequence, :asc ]).each do |img|
               
               context['image'] = {
+                'prev_url'  => (img.prev ? Paper.url_helpers.image_path(img.prev) : ""),
+                'next_url'  => (img.next ? Paper.url_helpers.image_path(img.next) : ""),
                 'large_url' => Paper.url_helpers.image_path(img),
                 'small_url' => img.url(:small)
               }
@@ -53,9 +60,9 @@ module Paper
         end
         
         def render(context)
-          return nil unless context['image']
-          %{<a href="#{context['image']['large_url']}" rel="#{@type}">} +
-          "  " + %{<img src="#{context['image']['small_url']}" />} +
+          return nil unless image = context['image']
+          %{<a href="#{image['large_url']}" rel="#{@type}">} +
+          "  " + %{<img src="#{image['small_url']}" />} +
           %{</a>}
         end
       end
