@@ -42,7 +42,7 @@ module Paper
             end
           end
           
-          result << (row != 3 ? %{</div>} : "")
+          result << (row != 0 ? %{</div>} : "")
           
           %{<div class="gallery">#{result}</div>}
         end
