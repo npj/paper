@@ -3,7 +3,7 @@
     <% posts.each do |p| %>
       <li>
         <div class="title">
-          <%= link_to(post.title, post_path(p)) %>
+          <%= link_to(p.title, post_path(p)) %>
         </div>
         <div class="datetime">
           <%= published_at(p) %>
