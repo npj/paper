@@ -23,6 +23,7 @@ var lightbox = {
         img.load(function() {
           $('#lightbox').fadeIn(500);
           $("#lightbox").css("width", $(this).width());
+          $("#lightbox").css("height", $(this).height());
           $("#lightbox").css("left", ($(window).width() / 2) - ($(this).width() / 2));
         });
       }
