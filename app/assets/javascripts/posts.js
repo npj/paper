@@ -17,20 +17,21 @@ var lightbox = {
     $('body').append(lightbox.html);
     $("body").append(lightbox.overlay);
     
-    var lb  = $("#lightbox");
-    var nav = $('#lightbox div.nav');
-    var ol  = $('#lightbox_overlay');
+    var lb        = $("#lightbox");
+    var nav       = $('#lightbox div.nav');
+    var navbutton = $('#lightbox div.nav div.prev, #lightbox div.nav div.next');
+    var ol        = $('#lightbox_overlay');
     
-    lb.css('top', $(window).scrollTop() + 30);
+    lb.css('top', $(window).scrollTop() + 50);
     ol.fadeIn(500);
     
     this.getImage(target.attr('href'));
     
-    nav.mouseenter(function() {
+    navbutton.mouseenter(function() {
       lightbox.mouseNav = true;
     });
     
-    nav.mouseleave(function() {
+    navbutton.mouseleave(function() {
       lightbox.mouseNav = false;
     });
     
