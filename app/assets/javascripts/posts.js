@@ -21,7 +21,7 @@ var lightbox = {
     var nav = $('#lightbox div.nav');
     var ol  = $('#lightbox_overlay');
     
-    lb.css('top', $("body").scrollTop() + 30);
+    lb.css('top', $(window).scrollTop() + 30);
     ol.fadeIn(500);
     
     this.getImage(target.attr('href'));
@@ -102,9 +102,30 @@ var lightbox = {
   
   getImage : function(img_url) {
     
+    var insertImage = function(data) {
+      
+      var lightbox = $('#lightbox');
+      var nav      = $("#lightbox div.nav")
+      
+      $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
+      img = $('#lightbox .content img');
+      
+      img.load(function() {
+
+        lightbox.fadeIn(500);
+        lightbox.css("width", $(this).width());
+        lightbox.css("height", $(this).height());
+        lightbox.css("left", ($(window).width() / 2) - ($(this).width() / 2));
+        
+        nav.css("width", $(this).width());
+        nav.css("top",   ($(this).height() / 2) - (nav.height() / 2));
+
+        img.show();
+      });
+    };
+    
     var loadImage = function(data) {
       
-      var lb   = $('#lightbox');
       var nav  = $("#lightbox div.nav")
       
       var prev = $("#lightbox div.nav div.prev a");
@@ -113,24 +134,10 @@ var lightbox = {
       var img = $('#lightbox .content img');
       
       if(img.length != 0) {
-        img.hide()
         img.remove();
       }
-        
-      $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
-      img = $('#lightbox .content img');
-      
-      img.load(function() {
 
-        lb.fadeIn(500);
-        lb.css("width", $(this).width());
-        nav.css("width", $(this).width());
-
-        lb.css("height", $(this).height());
-        lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
-        
-        img.show();
-      });
+      insertImage(data);
       
       prev.unbind('click');
       next.unbind('click');

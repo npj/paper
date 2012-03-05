@@ -239,9 +239,7 @@ ul.error-messages {
 #lightbox div.nav {
   position: absolute;
   display: none;
-  background-color: #000;
-  opacity: 0.5;
-  top: 6px;
+  opacity: 0.9;
   font-size: 50px;
   padding: 3px 0px 11px 0px;
 }
