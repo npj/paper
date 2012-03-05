@@ -102,81 +102,159 @@ var lightbox = {
   
   getImage : function(img_url) {
     
+    var requestImage = function(href) {
+      $.ajax({
+        url     : href + ".json",
+        success : loadImage
+      });
+    };
+    
+    var showProgress = function(container) {
+      
+      var opts = {
+        lines: 12, // The number of lines to draw
+        length: 30, // The length of each line
+        width: 20, // The line thickness
+        radius: 40, // The radius of the inner circle
+        color: '#000', // #rgb or #rrggbb
+        speed: 1, // Rounds per second
+        trail: 100, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+      };
+      
+      var spinner = new Spinner(opts).spin();
+      var element = spinner.el;
+      
+      $(element).css("position", "absolute");
+      $(element).css("top", container.height() / 2);
+      $(element).css("left", container.width() / 2);
+      
+      container.append(element);
+      
+      return $(element);
+    };
+    
+    var appendOverlay = function(content, img) {
+      
+      var html   = '<div class="image-overlay"></div>';
+      var width  = 500;
+      var height = 500;
+      
+      if(img.length > 0) {
+        width  = img.width();
+        height = img.height();
+      }
+      
+      content.append(html);
+      
+      overlay = content.find("div.image-overlay");
+            
+      overlay.css("width",  width);
+      overlay.css("height", height);
+      
+      content.css("width",  width);
+      content.css("height", height);
+      
+      return overlay;
+    };
+    
+    var appendImage = function(content, href) {
+      
+      var html = '<img style="display:none;" />';
+      var img  = null;
+      
+      content.append(html);
+      
+      img = content.find("img");
+      img.attr("src", href);
+      
+      return img;
+    };
+    
+    var resize = function(element, reference) {
+      element.css("width",  reference.width());
+      element.css("height", reference.height());
+    };
+    
+    var resizeAndPosition = function(element, reference) {
+      
+      var nav = $("#lightbox div.nav");
+
+      resize(element, reference);
+      element.css("left", ($(window).width() / 2) - (reference.width() / 2));
+      
+      nav.css("width", reference.width());
+      nav.css("top",   (reference.height() / 2) - (nav.height() / 2));
+    };
+    
+    var transition = function(lightbox, content, img, overlay, href, spinner) {
+      img = appendImage(content, href);
+      img.load(function() {
+        spinner.remove();
+        resize(overlay, $(this));
+        resizeAndPosition(lightbox, $(this));
+        overlay.fadeOut(500).queue(function() {
+          $(this).remove();
+        });
+        img.fadeIn(500);
+      });
+    };
+    
     var insertImage = function(data) {
       
       var lightbox = $('#lightbox');
-      var nav      = $("#lightbox div.nav")
+      var img      = $('#lightbox .content img');
+      var content  = $("#lightbox .content");
+      var overlay  = appendOverlay(content, img);
+      var spinner  = null;
+            
+      resizeAndPosition(lightbox, overlay);
       
-      $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
-      img = $('#lightbox .content img');
+      overlay.fadeIn(500);      
+      lightbox.fadeIn(500);  
+            
+      spinner = showProgress(content);      
+            
+      if(img.length != 0) {
+        img.fadeOut(500).queue(function() {
+          $(this).remove();
+          transition(lightbox, content, img, overlay, data.url, spinner);
+        });
+      }
+      else {
+        transition(lightbox, content, img, overlay, data.url, spinner);
+      }
+    };
+    
+    var setupButton = function(button, href) {
       
-      img.load(function() {
-
-        lightbox.fadeIn(500);
-        lightbox.css("width", $(this).width());
-        lightbox.css("height", $(this).height());
-        lightbox.css("left", ($(window).width() / 2) - ($(this).width() / 2));
-        
-        nav.css("width", $(this).width());
-        nav.css("top",   ($(this).height() / 2) - (nav.height() / 2));
-
-        img.show();
+      button.unbind('click');
+      
+      if(href.length == 0) {
+        button.hide();
+        return;
+      }
+      
+      button.attr('href', href);
+      button.show();
+      button.click(function(e) {
+        e.preventDefault();
+        requestImage(href);
       });
     };
     
     var loadImage = function(data) {
       
-      var nav  = $("#lightbox div.nav")
-      
-      var prev = $("#lightbox div.nav div.prev a");
-      var next = $("#lightbox div.nav div.next a");
-      
-      var img = $('#lightbox .content img');
-      
-      if(img.length != 0) {
-        img.remove();
-      }
-
       insertImage(data);
       
-      prev.unbind('click');
-      next.unbind('click');
-      
-      if(data.prev) {
-        prev.attr('href', data.prev);
-        prev.show();
-        prev.click(function(prevClick) {
-          prevClick.preventDefault();
-          $.ajax({
-            url     : prev.attr('href') + ".json",
-            success : loadImage
-          });
-        });
-      } 
-      else {
-        prev.hide();
-      }
-      
-      if(data.next) {
-        next.attr('href', data.next);
-        next.show();
-        next.click(function(nextClick) {
-          nextClick.preventDefault();
-          $.ajax({
-            url     : next.attr('href') + ".json",
-            success : loadImage
-          });
-        });
-      } 
-      else {
-        next.hide();
-      }
+      setupButton($("#lightbox div.nav div.prev a"), data.prev);
+      setupButton($("#lightbox div.nav div.next a"), data.next);
     };
     
-    $.ajax({
-      url     : img_url + ".json",
-      success : loadImage
-    });
+    requestImage(img_url);
   }
 };
 
