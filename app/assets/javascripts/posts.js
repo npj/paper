@@ -112,45 +112,25 @@ var lightbox = {
       
       var img = $('#lightbox .content img');
       
-      if(img.length == 0) {
-        $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
-        img = $('#lightbox .content img');
-        
-        img.load(function() {
-
-          lb.fadeIn(500);
-          lb.css("width", $(this).width());
-          nav.css("width", $(this).width());
-
-          lb.css("height", $(this).height());
-          lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
-
-          console.log("FAAAADEIN");
-          $(this).fadeIn(500);
-        });
-        
+      if(img.length != 0) {
+        img.hide()
+        img.remove();
       }
-      else {
-        img.fadeOut(500).queue(function() {
-          img.remove();
-          $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
-          img = $('#lightbox .content img').first();
-          
-          img.load(function() {
+        
+      $('#lightbox .content').html("<img style=\"display:none;\" src=\"" + data.url + "\" />");
+      img = $('#lightbox .content img');
+      
+      img.load(function() {
 
-            lb.fadeIn(500);
-            lb.css("width", $(this).width());
-            nav.css("width", $(this).width());
+        lb.fadeIn(500);
+        lb.css("width", $(this).width());
+        nav.css("width", $(this).width());
 
-            lb.css("height", $(this).height());
-            lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
-
-            $(this).fadeIn(500);
-          });
-          
-          $(this).dequeue();
-        });
-      }
+        lb.css("height", $(this).height());
+        lb.css("left", ($(window).width() / 2) - ($(this).width() / 2));
+        
+        img.show();
+      });
       
       prev.unbind('click');
       next.unbind('click');
