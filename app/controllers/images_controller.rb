@@ -9,9 +9,9 @@ class ImagesController < ApplicationController
       end
       format.json do
         render :json => { 
-          :url  => @image.url(:large), 
-          :prev => (@image.prev ? image_path(@image.prev, :format => :json) : ""), 
-          :next => (@image.next ? image_path(@image.next, :format => :json) : "")
+          :content => render_to_string(:partial => "image.html", :locals => { :image => @image }), 
+          :prev    => (@image.prev ? image_path(@image.prev, :format => :json) : ""), 
+          :next    => (@image.next ? image_path(@image.next, :format => :json) : "")
         }
       end
     end
