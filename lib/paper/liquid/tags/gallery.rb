@@ -25,10 +25,10 @@ module Paper
             
             gallery.images.order_by([ :sequence, :asc ]).each do |img|
               
-              context['image'] = {
-                'prev_url'  => (img.prev ? Paper.url_helpers.image_path(img.prev) : ""),
-                'next_url'  => (img.next ? Paper.url_helpers.image_path(img.next) : ""),
-                'large_url' => Paper.url_helpers.image_path(img),
+              context['gallery_image'] = {
+                'prev_url'  => (img.prev ? Paper.url_helpers.image_path(img.prev, :format => :json) : ""),
+                'next_url'  => (img.next ? Paper.url_helpers.image_path(img.next, :format => :json) : ""),
+                'large_url' => Paper.url_helpers.image_path(img, :format => :json),
                 'small_url' => img.url(:small)
               }
               
@@ -48,7 +48,7 @@ module Paper
         end
       end
       
-      class Image < ::Liquid::Tag
+      class GalleryImage < ::Liquid::Tag
                 
         SYNTAX = /(.+)/
         
@@ -60,7 +60,7 @@ module Paper
         end
         
         def render(context)
-          return nil unless image = context['image']
+          return nil unless image = context['gallery_image']
           %{<a href="#{image['large_url']}" rel="#{@type}">} +
           "  " + %{<img src="#{image['small_url']}" />} +
           %{</a>}
@@ -68,7 +68,7 @@ module Paper
       end
       
       ::Liquid::Template.register_tag('gallery', Gallery)
-      ::Liquid::Template.register_tag('image', Image)
+      ::Liquid::Template.register_tag('gallery_image', GalleryImage)
     end
   end
 end

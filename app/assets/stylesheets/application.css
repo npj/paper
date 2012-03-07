@@ -247,12 +247,7 @@ ul.error-messages {
 
 #lightbox div.nav a {
   color: #fff;
-  display: none;
   text-decoration: none;
-}
-
-#lightbox div.nav a:hover {
-  opacity: 1.0;
 }
 
 #lightbox div.nav div.prev {
@@ -263,14 +258,6 @@ ul.error-messages {
 #lightbox div.nav div.next {
   float: right;
   margin-right: 5px;
-}
-
-#lightbox div.content  div.image-overlay {
-  display: none;
-  position: absolute; 
-  top: 6px; 
-  background-color: #fff; 
-  opacity: 0.6;
 }
 
 #lightbox_overlay {

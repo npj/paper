@@ -1,267 +1,122 @@
-var lightbox = { 
-  html    : '\
-  <div id="lightbox" style="display:none;"> \
-    <div class="nav"> \
-      <div class="prev"><a href="">&laquo;</a></div> \
-      <div class="next"><a href="">&raquo;</a></div> \
-    </div> \
-    <div class="content"></div> \
-  </div>',
+var LightboxNav = function(aLightbox) {
   
-  overlay : '<div id="lightbox_overlay" style="display:none;"></div>',
-  lastmove : 0,
-  navDelay : 1000,
-  mouseNav : false,
-  
-  show : function(target) {
-    $('body').append(lightbox.html);
-    $("body").append(lightbox.overlay);
+  var self = {
     
-    var lb        = $("#lightbox");
-    var nav       = $('#lightbox div.nav');
-    var navbutton = $('#lightbox div.nav div.prev, #lightbox div.nav div.next');
-    var ol        = $('#lightbox_overlay');
-    
-    lb.css('top', $(window).scrollTop() + 50);
-    ol.fadeIn(500);
-    
-    this.getImage(target.attr('href'));
-    
-    navbutton.mouseenter(function() {
-      lightbox.mouseNav = true;
-    });
-    
-    navbutton.mouseleave(function() {
-      lightbox.mouseNav = false;
-    });
-    
-    lb.mousemove(function(e) {
+    html     : '\
+      <div class="nav"> \
+        <div class="prev"><a href="">&laquo;</a></div> \
+        <div class="next"><a href="">&raquo;</a></div> \
+      </div>',
       
-      lightbox.lastmove = e.timeStamp;
+    lightbox : aLightbox,
+    element  : null,
+    buttons  : null,
+    lastmove : 0,
+    delay    : 1000,
+    mouse    : false,
+    
+    init : function() {
       
-      var navHide = function(e1) {
-        
-        var since = (new Date()).getTime() - lightbox.lastmove;
-        
-        if(!lightbox.mouseNav && since >= lightbox.navDelay) {
-          $(this).fadeOut(250).queue(function(e2) {
-            nav.data('visible', false);
+      self.lightbox.element.prepend(self.html);
+      
+      self.element = $("#lightbox div.nav");
+      self.prev    = $('#lightbox div.nav div.prev');
+      self.next    = $('#lightbox div.nav div.next');
+            
+      $('#lightbox div.nav div').mouseenter(function() {
+        self.mouse = true;
+      }).mouseleave(function() {
+        self.mouse = false;
+      });
+      
+      self.lightbox.element.mousemove(function(e) {
+      
+        self.lastmove = e.timeStamp;
+      
+        if(!self.element.data('visible')) {
+          self.element.fadeIn(250).delay(self.delay).queue(function() {
+            self.hide();
             $(this).dequeue();
           });
+          self.element.data('visible', true);
         }
-        else {
-          $(this).delay(250).queue(navHide);
+      });
+      
+      self.lightbox.element.unbind('hide.lightbox');
+      self.lightbox.element.bind('hide.lightbox', function(e) {
+        e.preventDefault();
+        if(!self.mouse) {
+          self.lightbox.hide();
         }
-        
-        $(this).dequeue();
-      };
-      
-      if(!nav.data('visible')) {
-        nav.fadeIn(250).delay(lightbox.navDelay).queue(navHide);
-        nav.data('visible', true);
-      }
-    });
-    
-    lb.click(function(e) {
-      e.preventDefault();
-      if(!lightbox.mouseNav) {
-        $(document).trigger("hide.lightbox");
-      }
-    });
-    
-    ol.click(function(e) {
-      e.preventDefault();
-      if(!lightbox.mouseNav) {
-        $(document).trigger("hide.lightbox");
-      }
-    });
-    
-    $(document).bind('hide.lightbox', function(e) {
-      lightbox.hide();
-    });
-    
-    $(document).bind('destroy.lightbox', function(e) {
-      lb.unbind("click");
-      lb.unbind('mousemove');
-      ol.unbind("click");
-
-      lb.remove();
-      ol.remove();
-
-      $(document).unbind('hide.lightbox');
-      $(document).unbind('destroy.lightbox');
-    });
-  },
-  
-  hide : function() {
-    $('#lightbox').fadeOut(500).queue(function() {
-      $(document).trigger('destroy.lightbox');
-      $(this).dequeue();
-    });
-    $('#lightbox_overlay').fadeOut(500);
-  },
-  
-  getImage : function(img_url) {
-    
-    var requestImage = function(href) {
-      $.ajax({
-        url     : href + ".json",
-        success : loadImage
       });
-    };
+      
+      self.lightbox.element.on('resize.lightbox', self.resizeAndCenter);
+      self.lightbox.element.on('loaded.lightbox', self.load);
+    },
     
-    var showProgress = function(container) {
-      
-      var opts = {
-        lines: 12, // The number of lines to draw
-        length: 30, // The length of each line
-        width: 20, // The line thickness
-        radius: 40, // The radius of the inner circle
-        color: '#000', // #rgb or #rrggbb
-        speed: 1, // Rounds per second
-        trail: 100, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-      };
-      
-      var spinner = new Spinner(opts).spin();
-      var element = spinner.el;
-      
-      $(element).css("position", "absolute");
-      $(element).css("top", container.height() / 2);
-      $(element).css("left", container.width() / 2);
-      
-      container.append(element);
-      
-      return $(element);
-    };
+    resizeAndCenter : function() {
+      self.element.css("width", self.lightbox.element.width());
+      self.center();
+    },
     
-    var appendOverlay = function(content, img) {
-      
-      var html   = '<div class="image-overlay"></div>';
-      var width  = 500;
-      var height = 500;
-      
-      if(img.length > 0) {
-        width  = img.width();
-        height = img.height();
-      }
-      
-      content.append(html);
-      
-      overlay = content.find("div.image-overlay");
-            
-      overlay.css("width",  width);
-      overlay.css("height", height);
-      
-      content.css("width",  width);
-      content.css("height", height);
-      
-      return overlay;
-    };
+    center : function() {
+      self.element.css("top", (self.lightbox.element.height() / 2) - (self.element.height() / 2));
+    },
     
-    var appendImage = function(content, href) {
+    hide : function() {
       
-      var html = '<img style="display:none;" />';
-      var img  = null;
+      var since = (new Date()).getTime() - self.lastmove;
       
-      content.append(html);
-      
-      img = content.find("img");
-      img.attr("src", href);
-      
-      return img;
-    };
-    
-    var resize = function(element, reference) {
-      element.css("width",  reference.width());
-      element.css("height", reference.height());
-    };
-    
-    var resizeAndPosition = function(element, reference) {
-      
-      var nav = $("#lightbox div.nav");
-
-      resize(element, reference);
-      element.css("left", ($(window).width() / 2) - (reference.width() / 2));
-      
-      nav.css("width", reference.width());
-      nav.css("top",   (reference.height() / 2) - (nav.height() / 2));
-    };
-    
-    var transition = function(lightbox, content, img, overlay, href, spinner) {
-      img = appendImage(content, href);
-      img.load(function() {
-        spinner.remove();
-        resize(overlay, $(this));
-        resizeAndPosition(lightbox, $(this));
-        overlay.fadeOut(500).queue(function() {
-          $(this).remove();
-        });
-        img.fadeIn(500);
-      });
-    };
-    
-    var insertImage = function(data) {
-      
-      var lightbox = $('#lightbox');
-      var img      = $('#lightbox .content img');
-      var content  = $("#lightbox .content");
-      var overlay  = appendOverlay(content, img);
-      var spinner  = null;
-            
-      resizeAndPosition(lightbox, overlay);
-      
-      overlay.fadeIn(500);      
-      lightbox.fadeIn(500);  
-            
-      spinner = showProgress(content);      
-            
-      if(img.length != 0) {
-        img.fadeOut(500).queue(function() {
-          $(this).remove();
-          transition(lightbox, content, img, overlay, data.url, spinner);
+      if(!self.mouse && since >= self.delay) {
+        self.element.fadeOut(250).queue(function(e2) {
+          self.element.data('visible', false);
+          $(this).dequeue();
         });
       }
       else {
-        transition(lightbox, content, img, overlay, data.url, spinner);
+        self.element.delay(250).queue(function() {
+          self.hide();
+          $(this).dequeue();
+        });
       }
-    };
+    },
     
-    var setupButton = function(button, href) {
-      
+    load : function(event, data) {
+      self.setupButton(self.prev, data.prev);
+      self.setupButton(self.next, data.next);
+      self.resizeAndCenter();
+    },
+    
+    setupButton : function(button, href) {
+    
       button.unbind('click');
-      
+    
       if(href.length == 0) {
         button.hide();
         return;
       }
-      
+    
       button.attr('href', href);
       button.show();
       button.click(function(e) {
         e.preventDefault();
-        requestImage(href);
+        self.lightbox.render(href);
       });
-    };
-    
-    var loadImage = function(data) {
-      
-      insertImage(data);
-      
-      setupButton($("#lightbox div.nav div.prev a"), data.prev);
-      setupButton($("#lightbox div.nav div.next a"), data.next);
-    };
-    
-    requestImage(img_url);
-  }
+    },
+  };
+  
+  self.init();
+  
+  return self;
 };
 
 function openLightbox(event) {
   event.preventDefault();
-  lightbox.show($(event.delegateTarget));
+  
+  var lightbox   = new Lightbox();
+  var navigation = new LightboxNav(lightbox);
+  
+  lightbox.show($(event.delegateTarget).attr("href"));
 }
 
 $(window).ready(function() {

@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require_tree .
 //= require spin.min.js
+//= require lightbox.js
