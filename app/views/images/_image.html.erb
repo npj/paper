@@ -1,1 +1,10 @@
-<%= image_tag(image.url(:large)) %>
+<div class="image-container">
+  <div class="image">
+    <%= image_tag(image.url(:large), :rel => "lightbox-load") %>
+  </div>
+  <% if image.caption.present? %>
+    <div class="caption">
+      <%= image.caption.html_safe %>
+    </div>
+  <% end %>
+</div>

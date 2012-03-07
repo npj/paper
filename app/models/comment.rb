@@ -10,20 +10,20 @@ class Comment
   
   markdownifies(:markdown => :html)
   
-  before_validation :set_post,       :on => :create
-  before_validation :set_path,       :on => :create
-  before_validation :set_visible_to, :on => :create
+  before_validation :set_commentable, :on => :create
+  before_validation :set_path,        :on => :create
+  before_validation :set_visible_to,  :on => :create
   
   before_save  :inherit_privacy
   after_save   :pass_down_privacy
   
   belongs_to :user
-  belongs_to :post
+  belongs_to :commentable, :polymorphic => true
   belongs_to :parent, :class_name => "Comment"
   
   has_many :comments, :foreign_key => :parent_id
   
-  validates_presence_of :user_id, :post_id, :path, :visible_to
+  validates_presence_of :user_id, :commentable_id, :commentable_type, :path, :visible_to
   validates_presence_of :body
   
   field :path,       :type => Array
@@ -59,11 +59,11 @@ class Comment
   protected
     
     # before_validation :on => :create
-    # if there is a parent, set the post
-    # to the parent's post
-    def set_post
+    # if there is a parent, set the commentable
+    # to the parent's commentable
+    def set_commentable
       if self.parent
-        self.post = self.parent.post
+        self.commentable = self.parent.commentable
       end
     end
   
@@ -82,7 +82,7 @@ class Comment
     # set the default list of users who can 
     # view this comment
     # a comment is always visible to the owner
-    # a comment is always visible to the post owner
+    # a comment is always visible to the commentable owner
     # a comment is always visible to the parent comment owner
     def set_visible_to
       
@@ -90,8 +90,8 @@ class Comment
         self.visible_to << self.user.id
       end
       
-      if self.post
-        self.visible_to |= [ self.post.user.id ]
+      if self.commentable
+        self.visible_to |= [ self.commentable.user.id ]
         if self.parent
           self.visible_to |= [ self.parent.user.id ]
         end
@@ -99,14 +99,14 @@ class Comment
     end
     
     # a comment is always visible to the owners of child comments
-    # set privacy to private if parent or post is private
+    # set privacy to private if parent or commentable is private
     def inherit_privacy
       if parent
         parent.visible_to |= [ self.user_id ]
         parent.save
       end
       
-      if self.parent.try(:private?) || self.post.try(:private?)
+      if self.parent.try(:private?) || self.commentable.try(:private?)
         self.private!
       end
     end

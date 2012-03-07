@@ -17,8 +17,9 @@
 <% end %>
 
 <%= form_for Comment.new, :html => { :class => "form #{css}", :id => "reply_form_#{parent.id}" } do |form| %>
-  <% if parent.is_a?(Post) %>
-    <%= form.hidden_field :post_id, :value => parent.id %>
+  <% if !parent.is_a?(Comment) %>
+    <%= form.hidden_field :commentable_id,   :value => parent.id %>
+    <%= form.hidden_field :commentable_type, :value => parent.class.name %>
   <% else %>
     <%= form.hidden_field :parent_id, :value => parent.id %>
   <% end %>

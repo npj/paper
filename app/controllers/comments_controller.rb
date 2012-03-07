@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new((params[:comment] || { }).merge(:user => current_user))
     if @comment.save
-      redirect_to(post_path(@comment.post, :anchor => @comment.id))
+      redirect_to(polymorphic_path(@comment.commentable, :anchor => @comment.id))
     else
       Rails.logger.info("@comment.errors: #{@comment.errors.full_messages.inspect}")
     end
@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.delete!
     flash[:notice] = t("comments.deleted")
-    redirect_to(post_path(@comment.post))
+    redirect_to(polymorphic_path(@comment.commentable))
   end
   
   protected 

@@ -18,7 +18,7 @@ class Post
   })
   
   belongs_to :user
-  has_many :all_comments, :class_name => 'Comment', :dependent => :destroy
+  has_many :all_comments, :as => :commentable, :class_name => 'Comment', :dependent => :destroy
   
   field :title,        :type => String
   field :published_at, :type => DateTime

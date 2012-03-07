@@ -42,8 +42,8 @@ var LightboxNav = function(aLightbox) {
         }
       });
       
-      self.lightbox.element.unbind('hide.lightbox');
-      self.lightbox.element.bind('hide.lightbox', function(e) {
+      self.lightbox.element.off('hide.lightbox');
+      self.lightbox.element.on('hide.lightbox', function(e) {
         e.preventDefault();
         if(!self.mouse) {
           self.lightbox.hide();
@@ -51,7 +51,9 @@ var LightboxNav = function(aLightbox) {
       });
       
       self.lightbox.element.on('resize.lightbox', self.resizeAndCenter);
-      self.lightbox.element.on('loaded.lightbox', self.load);
+      self.lightbox.element.on('load.lightbox',   self.load);
+      
+      return self;
     },
     
     resizeAndCenter : function() {
@@ -89,7 +91,7 @@ var LightboxNav = function(aLightbox) {
     
     setupButton : function(button, href) {
     
-      button.unbind('click');
+      button.off('click');
     
       if(href.length == 0) {
         button.hide();
@@ -105,9 +107,7 @@ var LightboxNav = function(aLightbox) {
     },
   };
   
-  self.init();
-  
-  return self;
+  return self.init();
 };
 
 function openLightbox(event) {
