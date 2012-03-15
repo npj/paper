@@ -1,0 +1,48 @@
+.form .field {
+  margin: 10px 0px;
+}
+
+.form .field label {
+  float: left;
+  margin-right: 5px;
+}
+
+.form .field input[type=text],
+.form .field input[type=email],
+.form .field input[type=password],
+.form .field textarea {
+  border: 1px solid #ccc;
+  margin: 0px;
+  color: #444;
+  font-family: Georgia;
+  font-size: 14px;
+  padding: 3px;
+}
+
+.form input[type=submit] {
+  border: 1px solid #ccc;
+  background-color: #ddd;
+  font-family: Georgia;
+  font-size: 14px;
+  padding: 3px 7px;
+}
+
+.form input[type=submit]:hover {
+  background-color: #eee;
+}
+
+.form div.actions {
+  float: right;
+}
+
+.field_with_errors label {
+  color: #f44;
+}
+
+ul.error-messages {
+  padding: 10px;
+  list-style-type: none;
+  background-color: #eaa;
+  border: 2px solid #c88;
+  color: #844;
+}

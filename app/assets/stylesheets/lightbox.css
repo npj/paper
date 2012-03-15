@@ -1,0 +1,41 @@
+#lightbox {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 6px;
+  z-index: 2;
+}
+
+#lightbox div.nav {
+  position: absolute;
+  display: none;
+  opacity: 0.7;
+  font-size: 50px;
+  padding: 3px 0px 11px 0px;
+  z-index: 4;
+}
+
+#lightbox div.nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#lightbox div.nav div.prev {
+  float: left;
+  margin-left: 5px;
+}
+
+#lightbox div.nav div.next {
+  float: right;
+  margin-right: 5px;
+}
+
+#lightbox_overlay {
+  position: fixed;
+  opacity: 0.6;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  z-index: 1;
+}

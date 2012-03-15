@@ -1,0 +1,71 @@
+.accounts {
+  width: 443px;
+  margin-left: 30px
+}
+
+.accounts h2 {
+  text-align: center;
+  margin: 0px 0px 40px 0px;
+}
+
+.accounts .form {
+  clear: both;
+}
+
+.accounts .form .field label {
+  float: left;
+  margin-right: 5px;
+  width: 155px;
+}
+
+.accounts .form .field input[type=text],
+.accounts .form .field input[type=email],
+.accounts .form .field input[type=password] {
+  width: 275px;
+}
+
+.accounts .form .field .explain {
+  font-size: 11px;
+  line-height: 11px;
+  font-style: italic;
+  color: #888;
+  width: 275px;
+  margin-left: 162px;
+  padding: 0px;
+}
+
+.accounts .section {
+  clear: both;
+  border-top: 1px solid #ccc;
+  margin-top: 60px;
+  padding-top: 20px;
+}
+
+.accounts .links a {
+  display: block;
+  height: 14px;
+  line-height: 14px;
+  float: left;
+}
+
+.accounts.new .links a.signup-link,
+.accounts.login .links a.signup-link,
+.accounts.new .links a.login-link,
+.accounts.login .links a.login-link {
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+
+.accounts.new .links a.signup-link {
+  padding-left: 10px;
+}
+
+.accounts.password .links a.login-link {
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+
+.accounts .links a.forgot-link,
+.accounts.password .links a.signup-link {
+  padding-left: 10px;
+}
