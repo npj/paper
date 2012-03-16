@@ -45,11 +45,19 @@ class Comment
   end
   
   def can_delete?(u)
-    owned_by?(u) && !deleted?
+    !deleted? && (owned_by?(u) || u.has_role?(:delete_comments))
   end
   
   def deleted?
     !!self.deleted_at
+  end
+  
+  def has_comments?(include_deleted = false)
+    if include_deleted
+      self.comments.count > 0
+    else
+      self.comments.where(:deleted_at => nil).count > 0
+    end
   end
   
   def delete!
