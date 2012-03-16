@@ -7,4 +7,7 @@
       <%= image.caption.html_safe %>
     </div>
   <% end %>
+  <div class="actions">
+    <%= link_to(t('images.view_full'), image.url(:full), :target => "_blank") %>
+  </div>
 </div>

@@ -50,6 +50,8 @@ en:
     deleted: "Your comment was successfully deleted."
     delete:
       confirm: 'You are about to delete a comment. What you have written will be destroyed, but any replies to this comment will not be affected. This cannot be undone.'
+  images:
+    view_full: 'view full size'
   admin:
     users:
       link: 'admin users'

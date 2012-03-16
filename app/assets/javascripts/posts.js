@@ -8,12 +8,12 @@ var LightboxNav = function(aLightbox) {
         <div class="next"><a href="">&raquo;</a></div> \
       </div>',
       
-    lightbox : aLightbox,
-    element  : null,
-    buttons  : null,
-    lastmove : 0,
-    delay    : 1000,
-    mouse    : false,
+    lightbox   : aLightbox,
+    element    : null,
+    buttons    : null,
+    lastmove   : 0,
+    delay      : 1000,
+    ignoreHide : false,
     
     init : function() {
       
@@ -24,9 +24,9 @@ var LightboxNav = function(aLightbox) {
       self.next    = $('#lightbox div.nav div.next');
             
       $('#lightbox div.nav div').mouseenter(function() {
-        self.mouse = true;
+        self.ignoreHide = true;
       }).mouseleave(function() {
-        self.mouse = false;
+        self.ignoreHide = false;
       });
       
       self.lightbox.element.mousemove(function(e) {
@@ -42,15 +42,15 @@ var LightboxNav = function(aLightbox) {
         }
       });
       
-      self.lightbox.element.off('hide.lightbox');
-      self.lightbox.element.on('hide.lightbox', function(e) {
-        e.preventDefault();
-        if(!self.mouse) {
-          self.lightbox.hide();
+      $(document).on('click.lightbox overlay_click.lightbox', function(e, lightbox) {
+        if(lightbox && !self.ignoreHide) {
+          e.preventDefault();
+          lightbox.hide();
         }
       });
       
       self.lightbox.element.on('resize.lightbox', self.resizeAndCenter);
+      self.lightbox.element.on('resize.lightbox', self.bindActions);
       self.lightbox.element.on('load.lightbox',   self.load);
       
       return self;
@@ -59,6 +59,15 @@ var LightboxNav = function(aLightbox) {
     resizeAndCenter : function() {
       self.element.css("width", self.lightbox.element.width());
       self.center();
+    },
+    
+    bindActions : function() {
+      $('#lightbox div.content div.image-container div.actions').off('mouseenter mouseleave');
+      $('#lightbox div.content div.image-container div.actions').mouseenter(function() {
+        self.ignoreHide = true;
+      }).mouseleave(function() {
+        self.ignoreHide = false;
+      });
     },
     
     center : function() {
