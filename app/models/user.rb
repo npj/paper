@@ -65,4 +65,14 @@ class User
      
     user.save
   end
+  
+  def is_owner?
+    self.email == Paper.config.owner.email
+  end
+  
+  # wether the user 'u' can delete this user
+  # always false if this user is the owner
+  def can_delete?(u)
+    u && !is_owner? && u.has_role?(:delete_users)
+  end
 end
