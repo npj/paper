@@ -1,23 +1,29 @@
-<a name="<%= comment.id %>"></a>
-<div class="comment" data-id="<%= comment.id %>" data-parent-id="<%= comment.parent.try(:id) %>">
-  <%= link_to("-", comments_path, :class => "comment-collapse", 'data-collapsed' => false) %>
-  <div class="comment-user">
-    <% if comment.deleted? %>
-      <span class="deleted"><%= t('comments.deleted_placeholder') %></span>
-    <% else %>
-      <span class="name"><%= comment.user.name %></span>
-    <% end %>
-  </div>
-  <div class="comment-date">
-    <%= comment.deleted? ? "&nbsp;".html_safe : comment_date(comment) %>
-  </div>
-  <div class="collapsable">
-    <div class="comment-body">
-      <%= (comment.deleted? ? "<p></p>" : comment.html).html_safe  %>
+<% unless comment.deleted? && !comment.has_comments? %>
+  <a name="<%= comment.id %>"></a>
+  <div class="comment" data-id="<%= comment.id %>" data-parent-id="<%= comment.parent.try(:id) %>">
+    <%= link_to("-", comments_path, :class => "comment-collapse", 'data-collapsed' => false) %>
+    <div class="comment-user">
+      <% if comment.deleted? %>
+        <span class="deleted"><%= t('comments.deleted_placeholder') %></span>
+      <% else %>
+        <% if comment.user %>
+          <span class="name"><%= comment.user.name %></span>
+        <% else %>
+          <span class="deleted"><%= t('comments.user_deleted_placeholder') %></span>
+        <% end %>
+      <% end %>
     </div>
-    <%= render(:partial => "comments/actions", :locals => { :parent => comment }) %>
-    <% unless comment.comments.empty? %>
-      <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
-    <% end %>
+    <div class="comment-date">
+      <%= comment.deleted? ? "&nbsp;".html_safe : comment_date(comment) %>
+    </div>
+    <div class="collapsable">
+      <div class="comment-body">
+        <%= (comment.deleted? ? "<p></p>" : comment.html).html_safe  %>
+      </div>
+      <%= render(:partial => "comments/actions", :locals => { :parent => comment }) %>
+      <% if comment.has_comments? %>
+        <%= render(:partial => "comments/comments", :locals => { :parent => comment }) %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
