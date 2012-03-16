@@ -15,6 +15,9 @@ en:
   publish: 'publish'
   read_more: 'read full post'
   save: 'save'
+  next: 'next'
+  previous: 'previous'
+  you: 'you'
   recaptcha:
     invalid: 'There was an error with recaptcha. Please re-enter the code.'
   posts:
@@ -43,9 +46,15 @@ en:
       success: 'Your post was successfully deleted.'
   comments:
     deleted_placeholder: "deleted"
+    user_deleted_placeholder: 'user deleted'
     deleted: "Your comment was successfully deleted."
     delete:
       confirm: 'You are about to delete a comment. What you have written will be destroyed, but any replies to this comment will not be affected. This cannot be undone.'
+  admin:
+    users:
+      link: 'admin users'
+      confirm_delete: 'Are you sure you want to delete the user "%{name}?"'
+      delete_success: 'Successfully deleted user: "%{name}"'
   doc:
     post:
       public:
