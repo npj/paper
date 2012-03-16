@@ -1,5 +1,9 @@
 Paper::Application.routes.draw do
   
+  namespace :admin do 
+    resources :users
+  end
+
   resources :posts do
     member { post :publish }
   end
