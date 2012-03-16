@@ -1,0 +1,7 @@
+<div class="users">
+  <h2>users</h2>
+  <ul class="user-list">
+    <%= render(@users) %>
+  </ul>
+  <%= will_paginate(@users, :next_label => t('next') + '&raquo;', :previous_label => '&laquo;' + t('previous')) %>
+</div>

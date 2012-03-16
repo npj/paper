@@ -1,0 +1,36 @@
+div.users {
+  margin-left: 30px;
+}
+
+div.users h2 {
+  text-align: center;
+  margin: 0px 0px 40px 0px;
+}
+
+div.users ul.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+div.users ul.user-list li.user {
+  padding: 5px;
+  height: 25px;
+}
+
+div.users ul.user-list li.user.odd {
+  background-color: #eee;
+}
+
+div.users ul.user-list li.user.even {
+  background-color: #fff;
+}
+
+div.users ul.user-list li.user div.name {
+  float: left;
+  font-weight: normal;
+}
+
+div.users ul.user-list li.user div.actions {
+  float: right;
+  margin-right: 10px;
+}

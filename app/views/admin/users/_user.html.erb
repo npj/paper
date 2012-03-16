@@ -1,0 +1,12 @@
+<li class="user <%= cycle('odd', 'even') %>">
+  <div class="name">
+    <%= user.name %>
+    <% if user == current_user %>
+      (<em><%= t('you') %></em>)
+    <% end %>
+  </div>
+  <div class="actions">
+    <% if user.can_delete?(current_user) %>
+      <%= link_to(t('delete'), admin_user_path(user), :method => :delete, :confirm => t('admin.users.confirm_delete', :name => user.name)) %>
+    <% end %>
+</li>
