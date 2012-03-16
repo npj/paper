@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
   
     def find_comment
       @comment = Comment.find(params[:id])
-    rescue Mongoid::DocumentNotFound
+    rescue Mongoid::Errors::DocumentNotFound
       redirect_to(posts_path)
     end
 end
