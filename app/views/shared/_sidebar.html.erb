@@ -6,7 +6,10 @@
     <div class="name"><%= current_user.name %></div>
     <div class="edit">(<%= link_to(t('devise.accounts.edit'), edit_user_registration_path) %>)</div>
     <% if current_user.has_role?(:write_posts) %>
-      <%= link_to_unless_current(t('new'), new_post_path) %>
+      <%= link_to_unless_current(t('new'), new_post_path) %><br />
+    <% end %>
+    <% if current_user.has_role?(:admin_users) %>
+      <%= link_to_unless_current(t('admin.users.link'), admin_users_path) %><br />
     <% end %>
     <%= link_to(t('devise.sessions.sign_out'), logout_path, :method => :delete) %>
   <% else %>
