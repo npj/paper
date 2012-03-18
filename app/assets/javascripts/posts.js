@@ -78,7 +78,7 @@ var LightboxNav = function(aLightbox) {
       
       var since = (new Date()).getTime() - self.lastmove;
       
-      if(!self.mouse && since >= self.delay) {
+      if(!self.ignoreHide && since >= self.delay) {
         self.element.fadeOut(250).queue(function(e2) {
           self.element.data('visible', false);
           $(this).dequeue();
