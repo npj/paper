@@ -11,6 +11,9 @@
     <% if current_user.has_role?(:admin_users) %>
       <%= link_to_unless_current(t('admin.users.link'), admin_users_path) %><br />
     <% end %>
+    <% if current_user.has_role?(:admin_galleries) %>
+      <%= link_to_unless_current(t('admin.galleries.link'), admin_galleries_path) %><br />
+    <% end %>
     <%= link_to(t('devise.sessions.sign_out'), logout_path, :method => :delete) %>
   <% else %>
     <%= link_to(t('devise.sessions.sign_in'), login_path) %>

@@ -2,6 +2,9 @@ Paper::Application.routes.draw do
   
   namespace :admin do 
     resources :users
+    resources :galleries do
+      member { post :reindex }
+    end
   end
 
   resources :posts do

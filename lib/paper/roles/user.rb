@@ -8,7 +8,9 @@ module Paper
         end
       end
       
-      ROLES = [ :write_posts, :delete_posts, :publish_posts, :write_comments, :delete_comments, :admin_users, :delete_users ]
+      ROLES = [ :write_posts, :delete_posts, :publish_posts, :write_comments, 
+                :delete_comments, :admin_users, :delete_users, :admin_galleries,
+                :delete_galleries, :reindex_galleries ]
       
       class InvalidRoleError < RuntimeError
         def initialize(role)

@@ -1,0 +1,7 @@
+<div class="galleries">
+  <h2>galleries</h2>
+  <ul class="gallery-list">
+    <%= render(@galleries) %>
+  </ul>
+  <%= will_paginate(@galleries, :next_label => t('next') + '&raquo;', :previous_label => '&laquo;' + t('previous')) %>
+</div>

@@ -1,0 +1,36 @@
+div.galleries {
+  margin-left: 30px;
+}
+
+div.galleries h2 {
+  text-align: center;
+  margin: 0px 0px 40px 0px;
+}
+
+div.galleries ul.gallery-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+div.galleries ul.gallery-list li.gallery {
+  padding: 5px;
+  height: 25px;
+}
+
+div.galleries ul.gallery-list li.gallery.odd {
+  background-color: #eee;
+}
+
+div.galleries ul.gallery-list li.gallery.even {
+  background-color: #fff;
+}
+
+div.galleries ul.gallery-list li.gallery div.name {
+  float: left;
+  font-weight: normal;
+}
+
+div.galleries ul.gallery-list li.gallery div.actions {
+  float: right;
+  margin-right: 10px;
+}

@@ -18,6 +18,7 @@ en:
   next: 'next'
   previous: 'previous'
   you: 'you'
+  reindex: 'reindex'
   recaptcha:
     invalid: 'There was an error with recaptcha. Please re-enter the code.'
   posts:
@@ -57,6 +58,12 @@ en:
       link: 'admin users'
       confirm_delete: 'Are you sure you want to delete the user "%{name}?"'
       delete_success: 'Successfully deleted user: "%{name}"'
+    galleries:
+      link: 'admin galleries'
+      confirm_delete: 'Are you sure you want to delete the gallery "%{name}?"'
+      delete_success: 'Successfully deleted gallery: "%{name}"'
+      reindex:
+        success: 'Successfully reindexed gallery: "%{name}"'
   doc:
     post:
       public:

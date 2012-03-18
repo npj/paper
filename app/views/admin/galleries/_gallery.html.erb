@@ -1,0 +1,13 @@
+<li class="gallery <%= cycle('odd', 'even') %>">
+  <div class="name">
+    <%= gallery.name %>
+  </div>
+  <div class="actions">
+    <% if gallery.can_reindex?(current_user) %>
+      <%= link_to(t('reindex'), reindex_admin_gallery_path(gallery), :method => :post) %>
+    <% end %>
+    <% if gallery.can_delete?(current_user) %>
+      <%= link_to(t('delete'), admin_gallery_path(gallery), :method => :delete, :confirm => t('admin.galleries.confirm_delete', :name => gallery.name)) %>
+    <% end %>
+  </div>
+</li>

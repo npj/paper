@@ -202,7 +202,7 @@ a.reply-link {
   height: 175px;
 }
   
-.gallery a {
+div.gallery a {
   display: block;
   float: left;
   width: 156px;
@@ -215,7 +215,7 @@ a.reply-link {
   margin: 1px;
 }
 
-.gallery a img {
+div.gallery a img {
   vertical-align: middle;
 }
 
