@@ -23,13 +23,13 @@ module Paper
           
           context.stack do
             
-            gallery.images.order_by([ :sequence, :asc ]).each do |img|
+            gallery.images.order_by([ :sequence, :asc ]).each do |image|
               
               context['gallery_image'] = {
-                'prev_url'  => (img.prev ? Paper.url_helpers.image_path(img.prev, :format => :json) : ""),
-                'next_url'  => (img.next ? Paper.url_helpers.image_path(img.next, :format => :json) : ""),
-                'large_url' => Paper.url_helpers.image_path(img, :format => :json),
-                'small_url' => img.url(:small)
+                'prev_url'  => (image.prev ? Paper.url_helpers.image_path(image.prev, :format => :json) : ""),
+                'next_url'  => (image.next ? Paper.url_helpers.image_path(image.next, :format => :json) : ""),
+                'large_url' => Paper.url_helpers.image_path(image, :format => :json),
+                'small_url' => image.url(:gallery)
               }
               
               result << (row == 0 ? %{<div class="row">} : "") 

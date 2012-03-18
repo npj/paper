@@ -21,11 +21,24 @@ class Gallery
     self.where(:name => name).first
   end
   
+  def can_reindex?(u)
+    u && (self.user == u || u.has_role?(:reindex_galleries))
+  end
+  
+  def can_delete?(u)
+    u && (self.user == u || u.has_role?(:delete_galleries))
+  end
+  
   def reindex
     self.images.destroy_all
     seqno = -1
-    each_thumbnail do |object|
-      self.images.find_or_create_by(:name => object.key.split(/\//).last, :sequence => seqno += 1)
+    each_image do |object|
+      unless image = self.images.where(:key => object.key).first
+        self.images.create({
+          :key      => object.key,
+          :sequence => seqno += 1
+        })
+      end
     end
   end
   
@@ -46,13 +59,13 @@ class Gallery
       "#{prefix(:full)}/#{filename}"
     end
   
-    def each_thumbnail(marker = nil, &block)
-      objects = AWS::S3::Bucket.objects(Paper.config.s3.bucket, :prefix => prefix(:small), :marker => marker)
+    def each_image(marker = nil, &block)
+      objects = AWS::S3::Bucket.objects(Paper.config.s3.bucket, :prefix => prefix(:full), :marker => marker)
       if objects.empty?
         return objects
       else
         objects.select { |obj| obj.key =~ /\.jpg$/i }.each { |obj| yield(obj) }
-        each_thumbnail(objects.last.key, &block)
+        each_image(objects.last.key, &block)
       end
     end
 end

@@ -1,0 +1,2 @@
+Fabricator(:thumbnail) do
+end
