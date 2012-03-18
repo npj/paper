@@ -1,4 +1,5 @@
 defaults: &defaults
+  name: <%= ENV['PAPER_NAME'] %>
   host: <%= ENV['PAPER_HOST'] %>
   time_zone: <%= ENV['PAPER_TIME_ZONE'] %>
   owner:
