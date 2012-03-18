@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+group :production do
+  gem 'uglifier', '>= 1.0.3'
+end
+
 gem 'rails', '3.2.1'
 gem 'jquery-rails'
 gem 'json'
