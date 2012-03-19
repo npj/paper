@@ -38,6 +38,10 @@ class Post
     self.all_comments.where(:parent_id => nil)
   end
   
+  def visible_to?(u)
+    public? || u
+  end
+  
   def owned_by?(user)
     user && self.user == user
   end

@@ -19,6 +19,7 @@ en:
   previous: 'previous'
   you: 'you'
   reindex: 'reindex'
+  login_required:  'You must be logged in to do that.'
   recaptcha:
     invalid: 'There was an error with recaptcha. Please re-enter the code.'
   posts:

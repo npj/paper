@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [ :index, :show, :publish ]
-  
   before_filter :find_posts, :only   => :index
   before_filter :find_post,  :except => [ :index, :new, :create ]
+  before_filter :protect, :only => :show
   
   def index
     render(:locals => { :posts => @posts, :post => @posts.shift })
@@ -51,7 +51,7 @@ class PostsController < ApplicationController
   end
   
   protected
-  
+    
     def find_posts
       @posts = Post.for_user(current_user).order_by([ :published_at, :desc ])
     end
@@ -60,5 +60,14 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     rescue Mongoid::Errors::DocumentNotFound
       render(:status => :not_found, :notice => t('posts.not_found'))
+    end
+    
+    # before_filter :only => :show
+    # redirect user back to index if doesn't have
+    # the approriate permissions
+    def protect
+      return true if @post.visible_to?(current_user)
+      flash[:alert] = t("login_required")
+      redirect_to(login_path)
     end
 end
