@@ -1,9 +1,12 @@
 <div id="recent-posts">
   <ul>
     <% posts.each do |p| %>
-      <li>
+      <li class="<%= p.hidden? ? 'hidden' : '' %>">
         <div class="title">
           <%= link_to(p.title, post_path(p)) %>
+          <% if p.hidden? %>
+            &mdash; <span class="hidden">hidden</span>
+          <% end %>
         </div>
         <div class="datetime">
           <%= published_at(p) %>

@@ -2,7 +2,8 @@ module Paper
   
   PRIVACY = {
     :public  => 0,   # DEAFULT - visible by the world; anonymous and logged in users alike
-    :private => 1,   # visible only to logged in users
+    :private => 1,   # visible only to logged in users,
+    :hidden  => 2,   # only logged-in users with direct link may view
     # :custom  => 2  # visible to an author-speicified list of registered users
   }
   

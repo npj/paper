@@ -19,6 +19,15 @@ div.post .title {
   margin-bottom: 50px;
 }
 
+#recent-posts ul li.hidden div.title a,
+#recent-posts ul li.hidden div.title .hidden {
+  color: #888;
+}
+
+#recent-posts ul li.hidden div.title .hidden {
+  font-style: italic;
+}
+
 #recent-posts ul li .excerpt {
   margin: 0px;
 }

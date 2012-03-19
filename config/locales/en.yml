@@ -73,6 +73,9 @@ en:
       private:
         term: private
         meaning: 'The post will be visible only to logged-in users. Only users who have created an account and are logged-in will be able to see this post.'
+      hidden:
+        term: hidden
+        meaning: 'Share the url with whomever you would like to see this post. The only way to navigate to the post is to have a direct link, and furthermore, a visitor must be logged-in.'
       publish_at: 'The post will be visible after this time.'
     comment:
       post_reply:
