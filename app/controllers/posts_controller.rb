@@ -1,12 +1,13 @@
 class PostsController < ApplicationController
   
+  before_filter :store_location, :only => :show
   before_filter :authenticate_user!, :except => [ :index, :show, :publish ]
   before_filter :find_posts, :only   => :index
   before_filter :find_post,  :except => [ :index, :new, :create ]
   before_filter :protect, :only => :show
   
   def index
-    render(:locals => { :posts => @posts, :post => @posts.shift })
+    render(:locals => { :posts => @posts })
   end
   
   def new
