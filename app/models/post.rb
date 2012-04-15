@@ -6,6 +6,7 @@ class Post
   include Paper::Markdown
   include Paper::Liquid
   include Paper::Privacy
+  include Paper::UniqueId
   
   markdownifies({ 
     :raw_body    => :markdown,
@@ -32,6 +33,10 @@ class Post
     else
       self.where(:published_at => { '$lte' => Time.now }, :privacy => Paper::PRIVACY[:public])
     end
+  end
+  
+  def to_param
+    "#{self.unique_id}-#{self.title.parameterize}"
   end
   
   def comments

@@ -58,7 +58,7 @@ class PostsController < ApplicationController
     end
   
     def find_post
-      @post = Post.find(params[:id])
+      @post = Post.find_by_unique_id(params[:id].split(/\-/).first)
     rescue Mongoid::Errors::DocumentNotFound
       render(:status => :not_found, :notice => t('posts.not_found'))
     end
