@@ -8,4 +8,13 @@ class UserMailer < ActionMailer::Base
       :subject => "New User!"
     })
   end
+  
+  def notify_new_comment(comment)
+    @comment = comment
+    @subject = "#{@comment.user.name} just left a comment on your #{@comment.commentable_type.downcase}."
+    mail({
+      :to      => comment.commentable.user.email,
+      :subject => @subject
+    })
+  end
 end

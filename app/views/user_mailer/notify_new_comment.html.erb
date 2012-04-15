@@ -1,0 +1,15 @@
+<p>
+  Hi <%= @comment.commentable.user.name %>,
+</p>
+<p>
+  <%= @comment.user.name %> just left a comment on your <%= @comment.commentable_type.downcase %>, <%= link_to(@comment.commentable.title, polymorphic_url(@comment.commentable)) %>."
+</p>
+<p>
+  <blockquote>
+    <%= @comment.html.html_safe %>
+  </blockquote>
+</p>
+<p>Click <%= link_to('here', polymorphic_url(@comment.commentable, :anchor => @comment.id)) %> to read it, or copy-and-paste this link into your browser:</p>
+<p>
+  <%= link_to(polymorphic_url(@comment.commentable, :anchor => @comment.id), polymorphic_url(@comment.commentable, :anchor => @comment.id)) %>
+</p>
