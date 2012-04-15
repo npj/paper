@@ -1,5 +1,5 @@
 Fabricator(:comment) do
-  user     { Fabricate(:user) }
-  post     { Fabricate(:post) }
-  markdown { Faker::Lorem.paragraphs }
+  user        { Fabricate(:user) }
+  commentable { Fabricate(:post) }
+  markdown    { Faker::Lorem.paragraphs }
 end

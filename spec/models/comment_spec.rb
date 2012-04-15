@@ -5,7 +5,7 @@ describe Comment do
     
     before :each do
       @post    = Fabricate(:post)
-      @comment = Fabricate(:comment, :post => @post)
+      @comment = Fabricate(:comment, :commentable => @post)
     end
     
     it 'owner' do

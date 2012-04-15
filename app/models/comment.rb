@@ -34,7 +34,7 @@ class Comment
   
   def self.visible_to(user)
     if user
-      any_of({ :privacy => Paper::PRIVACY[:public] }, { :visible_to => { '$in' => [ user.id ] } })
+      any_of({ :privacy => Paper::PRIVACY[:public] }, { :visible_to => [ user.id ] })
     else
       where(:privacy => Paper::PRIVACY[:public])
     end
