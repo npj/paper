@@ -77,11 +77,11 @@ class Post
   end
   
   def excerpt_template
-    Marshal.load(self[:excerpt_template])
+    Marshal.load(self[:excerpt_template].to_s)
   end
   
   def template
-    Marshal.load(self[:template])
+    Marshal.load(self[:template].to_s)
   end
   
   def excerpt

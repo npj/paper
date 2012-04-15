@@ -14,8 +14,8 @@ module Paper
       
       def liquifies(hash, filters = [ ])
         hash.each do |attribute, into|
-          field into,      :type => String
           field attribute, :type => String
+          field into,      :type => BSON::Binary
         end
         
         self.liquify_attributes ||= { }
@@ -31,7 +31,7 @@ module Paper
       # process and save liquid templates
       def liquify
         self.class.liquify_attributes.each do |attribute, into|
-          self[into] = Marshal.dump(::Liquid::Template.parse(self.send(attribute) || ""))
+          self[into] = BSON::Binary.new(Marshal.dump(::Liquid::Template.parse(self.send(attribute) || "")))
         end
       end
   end
