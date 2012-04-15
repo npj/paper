@@ -137,6 +137,11 @@ a.reply-link {
   margin: 0 0 5px 0;
 }
 
+.form.post.new div.actions {
+  height: 30px;
+  margin-bottom: 20px;
+}
+
 .form.post.new .title {
   font-size: 14px;
   font-weight: normal;
