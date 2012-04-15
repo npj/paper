@@ -15,11 +15,7 @@ module Paper
       end
       
       def find_by_unique_id(id)
-        if obj = self.where(:unique_id => id).first
-          return obj
-        else
-          raise Mongoid::Errors::DocumentNotFound
-        end
+        self.where(:unique_id => id).first
       end
     end
     
