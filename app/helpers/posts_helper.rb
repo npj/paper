@@ -1,6 +1,6 @@
 module PostsHelper
   def published_at(post)
-    post.published_at.in_time_zone.strftime("%A %B %d, %Y &mdash; %H:%M %p %Z").html_safe
+    post.published_at.in_time_zone(Paper.config.time_zone).strftime("%A %B %d, %Y &mdash; %H:%M %p %Z").html_safe
   end
   
   def post_comments_count(post)
